@@ -1,0 +1,314 @@
+using System.Collections.Immutable;
+ 
+interface IComparable
+
+{
+
+    void compareTo();
+
+}
+
+class Skladnik: IComparable
+
+{
+ 
+    private string nazwaSkladnika;
+
+    private double cenaSkladnika;
+
+    public Skladnik(string nazwaSkladnika,double cenaSkladnika)
+
+    {
+
+        this.nazwaSkladnika = nazwaSkladnika;
+
+        if (cenaSkladnika >= 0)
+
+        {
+
+            this.cenaSkladnika = cenaSkladnika;
+
+        }
+
+        else
+
+        {
+
+            this.cenaSkladnika = 0;
+
+        }
+
+    }
+
+    public Skladnik()
+
+    {
+
+        this.nazwaSkladnika ="";
+
+        this.cenaSkladnika = 0;
+
+    }
+
+    public override string ToString()
+
+    {
+ 
+        Console.Write("Nazwa :{0},cena :", nazwaSkladnika);
+
+        return cenaSkladnika.ToString();
+
+    }
+
+    public double pobierzcenaSkladnika()
+
+    {
+
+        return cenaSkladnika;
+
+    }
+
+    public void compareTo()
+
+    {
+ 
+    }
+ 
+}
+
+class Pizza
+
+{
+
+    private string nazwa;
+
+    private decimal suma=15;
+
+    private string sos;
+
+    List<Skladnik> składniki = new List<Skladnik>();
+
+    public void dodajSkladnik(string nazwa,double cena)
+
+    {
+
+        Skladnik p1 = new(nazwa, cena);
+
+        składniki.Add(p1);
+
+        suma += (decimal)cena;
+
+    }
+
+    public void dodajSos(string nazwa)
+
+    {
+
+        sos = nazwa;
+
+    }
+
+    public void stawNazwe(string nazwa)
+
+    {
+
+        this.nazwa = nazwa;
+
+    }
+
+    public override string ToString()
+
+    {
+
+        bool x = czyNazwa();
+
+        bool a = czyPoprawnaPizza();
+
+        if (x == false)
+
+        {
+
+            return "prosze podać nazwe pizzy";
+
+        }
+
+        if (a==false)
+
+        {
+
+            return "dane pizzy sa nie poprawne lub za mało składniów";
+
+        }
+
+        else;
+
+        {
+
+            if (składniki.Count == 0)
+
+            {
+
+                return "pusta";
+
+            }
+
+            else;
+
+            {
+
+                foreach (Skladnik w in składniki)
+
+                {
+
+                    Console.Write("{0} ",w);
+
+                }
+
+            }
+
+            Console.WriteLine();
+
+            Console.WriteLine("Suma :{0}", suma);
+
+            return sos;
+
+        }
+
+    }
+
+    private bool czyNazwa()
+
+    {
+
+        if (nazwa == null)
+
+        {
+
+            return false;
+
+        }
+
+        else
+
+        {
+
+            return true;
+
+        }
+
+    }
+
+    private  bool czyPoprawnaPizza()
+
+    {
+
+        if (sos == null || składniki.Count < 1)
+
+        {
+
+            return false;
+
+        }
+
+        else
+
+        {
+
+            return true;
+
+        }
+
+    }
+
+}
+
+abstract class Zamowienie
+
+{
+
+    protected DateTime czasDostawy;
+
+    public virtual bool oprawnyCzas()
+
+    {
+
+        if (czasDostawy.Hour > DateTime.Now.Hour && czasDostawy.Day > DateTime.Now.Day && czasDostawy.Month > DateTime.Now.Month && czasDostawy.Year > DateTime.Now.Year)
+
+        {
+
+                return true;
+
+        }
+
+        else
+
+        {
+
+            return false;
+
+        }
+
+    }
+
+    public void stawCzasDostawy(DateTime x)
+
+    {
+
+        czasDostawy = x;
+
+    }
+ 
+}
+
+class NaMiejscu : Zamowienie
+
+{
+ 
+}
+
+class NaWynos : Zamowienie
+
+{
+
+    public override bool oprawnyCzas()
+
+    {
+
+        if (czasDostawy.Hour > DateTime.Now.Hour+3)
+
+        {
+
+            return true;
+
+        }
+
+        else
+
+        {
+
+            return false;
+
+        }
+
+    }
+
+}
+
+class program
+
+{
+
+    static void Main()
+
+    {
+ 
+    }
+
+}
+ 
+Mogę Panu zaliczyć na 4,5. Czy Pan się zgadza?
+ 
+Tak 
+ 
+Dobrze, dziękuję.
+ 
