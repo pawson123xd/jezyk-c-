@@ -1,0 +1,186 @@
+using System;
+using System.Threading.Tasks.Dataflow;
+class Program
+{
+    class Osoby
+    {
+        public int[] chromosony;
+        public double przystosowanie;
+        public Osoby(int lbnp)
+        {
+            Random rand = new Random();
+            this.chromosony = new int[lbnp];
+            for (int i = 0; i < chromosony.Length; i++) {
+                this.chromosony[i] = rand.Next();
+            }
+        }
+        public double dekodowanie(int ZBMIN, int ZBMAX, int lbnp,ref int miejsce)
+        {
+            int zb = ZBMAX - ZBMIN;
+            int ctmp = 0;
+            for (int i = 0; i <lbnp; i++)
+            {
+                ctmp += chromosony[miejsce] * 2 ^ (i);
+                miejsce++;
+            }
+            double x1 = ZBMIN + (ctmp / 2 ^ (lbnp) - 1) * zb;
+            return Math.Round(x1,2);
+        }
+    }
+    public static void Main(string[] args)
+    {
+        int osobnikow;
+        int iteracji;
+        int LBnP;
+        int TurRozm;
+        int miejsce =0;
+        while (true)
+        {
+            Console.WriteLine("podaj liczbe chromosonów");
+            LBnP = int.Parse(Console.ReadLine());
+            if (LBnP < 3)
+            {
+                Console.WriteLine("minimum 3");
+                continue;
+            }
+            break;
+        }
+        while (true)
+        {
+            Console.WriteLine("podaj liczbe iteracji");
+            iteracji = int.Parse(Console.ReadLine());
+            if (iteracji < 20)
+            {
+                Console.WriteLine("minimum 20");
+                continue;
+            }
+            break;
+        }
+        while (true)
+        {
+            Console.WriteLine("podaj liczbe osobników");
+            osobnikow = int.Parse(Console.ReadLine());
+            if (osobnikow < 9 || osobnikow % 2 == 0)
+            {
+                Console.WriteLine("liczba osobników nie moze byc mniej niz 9 i jest parzysta");
+                continue;
+            }
+            break;
+        }
+        while (true)
+        {
+            Console.WriteLine("podaj liczbe turRozm");
+            TurRozm = int.Parse(Console.ReadLine());
+            if(TurRozm < 2)
+            {
+                Console.WriteLine("za mało");
+                continue;
+            }
+            else if (TurRozm > Math.Round(osobnikow * 0.2) && TurRozm !=2)
+            {
+                Console.WriteLine("za duzo");
+                continue;
+            }
+            break;
+        }
+        List<Osoby> osoby = new List<Osoby>();
+        for (int i = 0; i < osobnikow; i++) {
+            osoby.Add(new Osoby(LBnP * 2));
+        }
+        foreach (Osoby osob in osoby)
+        {
+            double x1 = osob.dekodowanie(0, 100, LBnP,ref miejsce);
+            double x2 = osob.dekodowanie(0, 100, LBnP,ref miejsce);
+            osob.przystosowanie = przystosowanie(x1,x2);
+            miejsce = 0;
+        }
+        miejsce = 0;
+        for (int i = 0;i < iteracji; i++)
+        {
+            double suma = 0;
+            List<Osoby> pokolenie = Turniej(osoby, TurRozm, osobnikow);
+            pokolenie=mutacja(pokolenie);
+            Osoby najlepszy=hot_deck(osoby);
+            pokolenie.Add(najlepszy);
+            Osoby Nowy_Najlepszy=pokolenie[0];
+            foreach (Osoby osob in pokolenie)
+            {
+                double x1 = osob.dekodowanie(0, 100, LBnP, ref miejsce);
+                double x2 = osob.dekodowanie(0, 100, LBnP, ref miejsce);
+                osob.przystosowanie = przystosowanie(x1,x2);
+                suma += osob.przystosowanie;
+                if (Nowy_Najlepszy.przystosowanie < osob.przystosowanie)
+                {
+                    Nowy_Najlepszy = osob;
+                }
+                miejsce = 0;
+            }
+            miejsce = 0;
+            suma = suma / pokolenie.Count;
+            Console.WriteLine("najlepszy z nowego pokelenia to {0} srednia przystowania wynoś {1}", Nowy_Najlepszy.przystosowanie, suma);
+            osoby = pokolenie;
+        }
+    }
+    static double przystosowanie(double x1, double x2)
+    {
+        return Math.Round((Math.Sin(x1 * 0.05) + Math.Sin(x2 * 0.05)) + 0.4 * Math.Sin(x1 * 0.15) + Math.Sin(x2 * 0.15),2);
+    }
+    static Osoby hot_deck(List<Osoby> osoby) {
+        Osoby najlepszy =osoby[0];
+        foreach (Osoby osob in osoby)
+        {
+            if(najlepszy.przystosowanie < osob.przystosowanie)
+            {
+                najlepszy = osob;
+            }
+        }
+        return najlepszy;       
+    }
+    static List<Osoby> Turniej(List<Osoby> populacja, int TurRozm, int osobnikow) 
+    {
+        Random rand = new Random();
+        List<Osoby> osoby = new List<Osoby>();
+        for (int i = 0; i < osobnikow-1; i++) {
+            Osoby[] rywale = new Osoby[TurRozm];
+            int[] pamiec=new int[TurRozm];
+            for (int j = 0; j < TurRozm; j++)
+            {
+                int x1 = rand.Next(osobnikow);
+                pamiec[j] = x1;
+                for (int j2 = 0;j2 < pamiec.Length; j2++)
+                {
+                    while(pamiec[j2] == x1)
+                    {
+                        x1 = rand.Next(osobnikow);
+                    }
+                }
+                rywale[j] = populacja[x1];
+            }
+        Osoby max = rywale[0];
+        for (int j = 0;j < TurRozm; j++)
+            {
+                if (max.przystosowanie < rywale[j].przystosowanie) {
+                    max = rywale[j];
+                }
+            }
+        osoby.Add(max);
+        }
+        return osoby;
+    }
+    static List<Osoby> mutacja(List<Osoby> populacja)
+    {
+        Random rand = new Random();
+        foreach (Osoby osoby in populacja)
+        {
+            int x1 = rand.Next(osoby.chromosony.Length);
+            if (osoby.chromosony[x1] == 0)
+            {
+                osoby.chromosony[x1] = 1;
+            }
+            else {
+                osoby.chromosony[x1] = 0;
+            }
+        }
+        return populacja;
+    }
+}
