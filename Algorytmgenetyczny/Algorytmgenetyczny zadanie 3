@@ -1,0 +1,163 @@
+namespace program
+{
+    class Osobnik
+    {
+        public double[] wag;
+        public double przystosowanie = 0;
+        public Osobnik()
+        {
+            wag = new double[3 * 3];
+            Random random = new Random();
+            for (int i = 0; i < wag.Length; i++)
+            {
+                wag[i] = random.NextDouble() * 20 - 10;
+            }
+        }
+        public void Przystowanie()
+        {
+            byte[,] daneWejsciowe = { { 0, 0 }, { 0, 1 }, { 1, 0 }, { 1, 1 } };
+            for (int i = 0; i < 4; i++)
+            {
+                double wynik = Aktywacja(daneWejsciowe[i, 0], daneWejsciowe[i, 1]);
+                przystosowanie += Math.Pow((daneWejsciowe[i, 0]^daneWejsciowe[i, 1]) - wynik, 2);
+            }
+            przystosowanie = przystosowanie / 4;
+        }
+
+        private double Aktywacja(byte we1, byte we2)
+        {
+            double suma = 0;
+            suma += wag[0] * we1;
+            suma += wag[1] * we2;
+            suma += wag[2];
+            suma += wag[3] * we1;
+            suma += wag[4] * we2;
+            suma += wag[5];
+            suma += wag[6] * we1;
+            suma += wag[7] * we2;
+            suma += wag[8];
+
+            return Sigmoida(suma);
+        }
+        private double Sigmoida(double x)
+        {
+            return 1 / (1 + Math.Exp(-x));
+        }
+    }
+    class program
+    {
+        static void Main(string[] args)
+        {
+            int iteracja;
+            int osobnicy = 13;
+            List<Osobnik> stare = new List<Osobnik>();
+            while (true)
+            {
+                Console.WriteLine("Podaj liczbe iteracja");
+                iteracja = int.Parse(Console.ReadLine());
+                if (iteracja < 100) {
+                    Console.WriteLine("za malo");
+                    continue;
+                }
+                break;
+            }
+            for (int i = 0; i < osobnicy; i++)
+            {
+                Osobnik osoba = new Osobnik();
+                osoba.Przystowanie();
+                stare.Add(osoba);
+            }
+            for (int i = 0; i < iteracja; i++) {
+                List<Osobnik> pokolenie = new List<Osobnik>();
+                double srednia = 0;
+                pokolenie = Turniej(stare, osobnicy);
+                kryzowanie(pokolenie[0], pokolenie[1]);
+                kryzowanie(pokolenie[2], pokolenie[3]);
+                kryzowanie(pokolenie[8], pokolenie[9]);
+                kryzowanie(pokolenie[pokolenie.Count-2], pokolenie[pokolenie.Count-1]);
+                pokolenie=mutacja(pokolenie);
+                pokolenie.Add(hot_deck(stare));
+                Osobnik najlepszy = pokolenie[0];
+                foreach(Osobnik osoba in pokolenie)
+                {
+                    osoba.Przystowanie();
+                    if (najlepszy.przystosowanie < osoba.przystosowanie)
+                    {
+                        najlepszy = osoba;
+                    }
+                    srednia += osoba.przystosowanie;
+                }
+                srednia = srednia / pokolenie.Count;
+                Console.WriteLine("srednia jest rowna {0} a najlepszy {1}", srednia,najlepszy.przystosowanie);
+                stare = pokolenie;
+            }
+        }
+        static List<Osobnik> Turniej(List<Osobnik> populacja, int osobnikow)
+        {
+            Random rand = new Random();
+            List<Osobnik> osoby = new List<Osobnik>();
+            for (int i = 0; i < osobnikow - 1; i++)
+            {
+                Osobnik[] rywale = new Osobnik[3];
+                int[] pamiec = new int[3];
+                for (int j = 0; j < 3; j++)
+                {
+                    int x1 = rand.Next(osobnikow);
+                    pamiec[j] = x1;
+                    for (int j2 = 0; j2 < pamiec.Length; j2++)
+                    {
+                        while (pamiec[j2] == x1)
+                        {
+                            x1 = rand.Next(osobnikow);
+                        }
+                    }
+                    rywale[j] = populacja[x1];
+                }
+                Osobnik max = rywale[0];
+                for (int j = 0; j < 3; j++)
+                {
+                    if (max.przystosowanie < rywale[j].przystosowanie)
+                    {
+                        max = rywale[j];
+                    }
+                }
+                osoby.Add(max);
+            }
+            return osoby;
+        }
+
+        static void kryzowanie(Osobnik x1, Osobnik x2)
+        {
+            Random rand = new Random();
+            int cienicie = rand.Next(9 - 2);
+            for (int i = cienicie + 1; i < 9; i++)
+            {
+                double pamieć = x1.wag[i];
+                x1.wag[i] = x2.wag[i];
+                x2.wag[i] = pamieć;
+            }
+        }
+        static List<Osobnik> mutacja(List<Osobnik> populacja)
+        {
+            Random rand = new Random();
+            for (int i = 5; i < populacja.Count; i++)
+            {
+                int x1 = rand.Next(populacja[i].wag.Length);
+                populacja[i].wag[x1] = populacja[i].wag[x1] * -1;
+            }
+            return populacja;
+        }
+        static Osobnik hot_deck(List<Osobnik> osoby)
+        {
+            Osobnik najlepszy = osoby[0];
+            foreach (Osobnik osob in osoby)
+            {
+                if (najlepszy.przystosowanie < osob.przystosowanie)
+                {
+                    najlepszy = osob;
+                }
+            }
+            return najlepszy;
+        }
+    }
+}
