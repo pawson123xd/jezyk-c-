@@ -1,0 +1,184 @@
+class program
+{
+    class osobnik
+    {
+        Random random = new Random();
+        public byte[] chromosony;
+        public double przystosowanie;
+        public osobnik(int LBnP)
+        {
+            chromosony = new byte[LBnP * 3];
+            for (int i = 0; i < chromosony.Length; i++)
+            {
+                chromosony[i] = (byte)random.Next();
+            }
+        }
+        public double dekodowanie(int ZBMIN, int ZBMAX, int lbnp,ref int miejsce)
+        {
+            int zb = ZBMAX - ZBMIN;
+            int ctmp = 0;
+            for (int i = 0; i <lbnp; i++)
+            {
+                ctmp += chromosony[miejsce] * 2 ^ (i);
+                miejsce++;
+            }
+            double x1 = ZBMIN + (ctmp / 2 ^ (lbnp) - 1) * zb;
+            return Math.Round(x1,2);
+        }
+    }
+    public static void Main(string[] args)
+    {
+        int osobnikow=13;
+        int iteracji;
+        int LBnP;
+        int TurRozm=3;
+        int miejsce = 0;
+        while (true)
+        {
+            Console.WriteLine("podaj liczbe chromosonów");
+            LBnP = int.Parse(Console.ReadLine());
+            if (LBnP < 4)
+            {
+                Console.WriteLine("minimum 4");
+                continue;
+            }
+            break;
+        }
+        while (true)
+        {
+            Console.WriteLine("podaj liczbe iteracji");
+            iteracji = int.Parse(Console.ReadLine());
+            if (iteracji < 100)
+            {
+                Console.WriteLine("minimum 100");
+                continue;
+            }
+            break;
+        }
+        List<osobnik> stare = new List<osobnik>();
+        for (int i = 0; i < osobnikow; i++) {
+            stare.Add(new osobnik(LBnP));
+        }
+        foreach (osobnik osoba in stare)
+        {
+            double pa = osoba.dekodowanie(0, 3, LBnP,ref miejsce);
+            double pb = osoba.dekodowanie(0, 3, LBnP, ref miejsce);
+            double pc = osoba.dekodowanie(0, 3, LBnP, ref miejsce);
+            osoba.przystosowanie=Przystosowanie(pa,pb,pc);
+            miejsce = 0;
+        }
+        for (int i = 0; i < iteracji; i++)
+        {
+            double suma = 0;
+            List<osobnik> pokolenie = Turniej(stare, TurRozm, osobnikow);
+            osobnik najlepszy = hot_deck(stare);
+            kryzowanie(pokolenie[0], pokolenie[1], LBnP);
+            kryzowanie(pokolenie[2], pokolenie[3], LBnP);
+            kryzowanie(pokolenie[8], pokolenie[9], LBnP);
+            kryzowanie(pokolenie[pokolenie.Count-2], pokolenie[pokolenie.Count-1], LBnP);
+            pokolenie=mutacja(pokolenie);
+            pokolenie.Add(najlepszy);
+            najlepszy = pokolenie[0];
+            foreach (osobnik osoba in stare)
+            {
+                double pa = osoba.dekodowanie(0, 3, LBnP, ref miejsce);
+                double pb = osoba.dekodowanie(0, 3, LBnP, ref miejsce);
+                double pc = osoba.dekodowanie(0, 3, LBnP, ref miejsce);
+                osoba.przystosowanie = Przystosowanie(pa, pb, pc);
+                if (najlepszy.przystosowanie < osoba.przystosowanie)
+                {
+                    najlepszy = osoba;
+                }
+                miejsce = 0;
+                suma += osoba.przystosowanie;
+            }
+            suma =suma / pokolenie.Count;
+            Console.WriteLine("najlepszy z nowego pokelenia to {0} srednia przystowania wynoś {1}", Math.Round(najlepszy.przystosowanie,2),Math.Round(suma,2));
+            stare = pokolenie;
+        }
+    }
+    static double Przystosowanie(double pa, double pb, double pc)
+    {
+        double suma = 0;
+        double[] y = {0.59554, 0.58813, 0.64181, 0.68587, 0.44783, 0.40836, 0.38241, -0.05933,-0.12478, -0.36847, -0.39935, -0.50881, -0.63435, -0.59979, -0.64107, -0.51808, -0.38127, -0.12349, -0.09624, 0.27893, 0.48965, 0.33089, 0.70615,0.53342, 0.43321, 0.64790, 0.48834, 0.18440, -0.02389, -0.10261, -0.33594,-0.35101, -0.62027, -0.55719, -0.66377, -0.62740 };
+        double[] x = {-1.0, -0.8, -0.6, -0.4, -0.2, 0.0, 0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6,1.8, 2.0, 2.2, 2.4, 2.6, 2.8, 3.0, 3.2, 3.4, 3.6, 3.8, 4.0, 4.2, 4.4, 4.6,4.8, 5.0, 5.2, 5.4, 5.6, 5.8, 6.0 };
+        for (int i = 0; i <y.Length; i++)
+        {
+            suma += Math.Pow(y[i] + (pa * Math.Sin(pb * x[i]+pc)),2);
+        }
+        return suma;
+    }
+    static List<osobnik> Turniej(List<osobnik> populacja, int TurRozm, int osobnikow)
+    {
+        Random rand = new Random();
+        List<osobnik> osoby = new List<osobnik>();
+        for (int i = 0; i < osobnikow - 1; i++)
+        {
+            osobnik[] rywale = new osobnik[TurRozm];
+            int[] pamiec = new int[TurRozm];
+            for (int j = 0; j < TurRozm; j++)
+            {
+                int x1 = rand.Next(osobnikow);
+                pamiec[j] = x1;
+                for (int j2 = 0; j2 < pamiec.Length; j2++)
+                {
+                    while (pamiec[j2] == x1)
+                    {
+                        x1 = rand.Next(osobnikow);
+                    }
+                }
+                rywale[j] = populacja[x1];
+            }
+            osobnik max = rywale[0];
+            for (int j = 0; j < TurRozm; j++)
+            {
+                if (max.przystosowanie < rywale[j].przystosowanie)
+                {
+                    max = rywale[j];
+                }
+            }
+            osoby.Add(max);
+        }
+        return osoby;
+    }
+    static void kryzowanie(osobnik x1,osobnik x2,int LBnP)
+    {
+        Random rand = new Random();
+        int cienicie=rand.Next(LBnP-2);
+        for (int i = cienicie+1;i < LBnP; i++)
+        {
+            byte pamieć = x1.chromosony[i];
+            x1.chromosony[i]=x2.chromosony[i];
+            x2.chromosony[i] = pamieć;
+        }
+    }
+    static List<osobnik> mutacja(List<osobnik> populacja)
+    {
+        Random rand = new Random();
+        for (int i = 5; i < populacja.Count;i++)
+        {
+            int x1 = rand.Next(populacja[i].chromosony.Length);
+            if (populacja[i].chromosony[x1] == 0)
+            {
+                populacja[i].chromosony[x1] = 1;
+            }
+            else
+            {
+                populacja[i].chromosony[x1] = 0;
+            }
+        }
+        return populacja;
+    }
+    static osobnik hot_deck(List<osobnik> osoby)
+    {
+        osobnik najlepszy = osoby[0];
+        foreach (osobnik osob in osoby)
+        {
+            if (najlepszy.przystosowanie < osob.przystosowanie)
+            {
+                najlepszy = osob;
+            }
+        }
+        return najlepszy;
+    }
+}
