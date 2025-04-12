@@ -21,7 +21,7 @@ namespace program
                 double wynik = Aktywacja(daneWejsciowe[i, 0], daneWejsciowe[i, 1]);
                 przystosowanie += Math.Pow((daneWejsciowe[i, 0]^daneWejsciowe[i, 1]) - wynik, 2);
             }
-            przystosowanie = przystosowanie / 4;
+            
         }
 
         private double Aktywacja(byte we1, byte we2)
