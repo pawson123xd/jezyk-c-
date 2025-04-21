@@ -10,20 +10,21 @@ class program
             chromosony = new byte[LBnP * 3];
             for (int i = 0; i < chromosony.Length; i++)
             {
-                chromosony[i] = (byte)random.Next();
+                chromosony[i] = (byte)random.Next(0,2);
             }
         }
-        public double dekodowanie(int ZBMIN, int ZBMAX, int lbnp,ref int miejsce)
+        public double dekodowanie(int ZBMIN, int ZBMAX, int lbnp, ref int miejsce)
         {
             int zb = ZBMAX - ZBMIN;
-            int ctmp = 0;
-            for (int i = 0; i <lbnp; i++)
+            double ctmp = 0.0;
+            for (int i = 0; i < lbnp; i++)
             {
-                ctmp += chromosony[miejsce] * 2 ^ (i);
-                miejsce++;
+                ctmp += this.chromosony[miejsce - i] * Math.Pow(2, i);
             }
-            double x1 = ZBMIN + (ctmp / 2 ^ (lbnp) - 1) * zb;
-            return Math.Round(x1,2);
+            double wynik = (Math.Pow(2, lbnp)) - 1;
+            wynik = ctmp / wynik;
+            double pm = ZBMIN + (wynik * zb);
+            return pm;
         }
     }
     public static void Main(string[] args)
@@ -32,7 +33,7 @@ class program
         int iteracji;
         int LBnP;
         int TurRozm=3;
-        int miejsce = 0;
+        int miejsce;
         while (true)
         {
             Console.WriteLine("podaj liczbe chromosonów");
@@ -59,18 +60,19 @@ class program
         for (int i = 0; i < osobnikow; i++) {
             stare.Add(new osobnik(LBnP));
         }
+        miejsce = LBnP * 3 - 1;
         foreach (osobnik osoba in stare)
         {
             double pa = osoba.dekodowanie(0, 3, LBnP,ref miejsce);
             double pb = osoba.dekodowanie(0, 3, LBnP, ref miejsce);
             double pc = osoba.dekodowanie(0, 3, LBnP, ref miejsce);
             osoba.przystosowanie=Przystosowanie(pa,pb,pc);
-            miejsce = 0;
+            miejsce = LBnP * 3 - 1;
         }
         for (int i = 0; i < iteracji; i++)
         {
             double suma = 0;
-            List<osobnik> pokolenie = Turniej(stare, TurRozm, osobnikow);
+            List<osobnik> pokolenie = turniej(stare, TurRozm, osobnikow);
             osobnik najlepszy = hot_deck(stare);
             kryzowanie(pokolenie[0], pokolenie[1], LBnP);
             kryzowanie(pokolenie[2], pokolenie[3], LBnP);
@@ -89,11 +91,11 @@ class program
                 {
                     najlepszy = osoba;
                 }
-                miejsce = 0;
+                miejsce = LBnP * 3 - 1;
                 suma += osoba.przystosowanie;
             }
             suma =suma / pokolenie.Count;
-            Console.WriteLine("najlepszy z nowego pokelenia to {0} srednia przystowania wynoś {1}", Math.Round(najlepszy.przystosowanie,2),Math.Round(suma,2));
+            Console.WriteLine("najlepszy z nowego pokelenia to {0} srednia przystowania wynoś {1}", najlepszy.przystosowanie,suma);
             stare = pokolenie;
         }
     }
@@ -104,37 +106,30 @@ class program
         double[] x = {-1.0, -0.8, -0.6, -0.4, -0.2, 0.0, 0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6,1.8, 2.0, 2.2, 2.4, 2.6, 2.8, 3.0, 3.2, 3.4, 3.6, 3.8, 4.0, 4.2, 4.4, 4.6,4.8, 5.0, 5.2, 5.4, 5.6, 5.8, 6.0 };
         for (int i = 0; i <y.Length; i++)
         {
-            suma += Math.Pow(y[i] + (pa * Math.Sin(pb * x[i]+pc)),2);
+            double wynik = y[i] - (pa * Math.Sin((pb * x[i]) + pc));
+            suma += Math.Pow(wynik,2);
         }
         return suma;
     }
-    static List<osobnik> Turniej(List<osobnik> populacja, int TurRozm, int osobnikow)
+    static List<osobnik> turniej(List<osobnik> populacja, int TurRozm, int osobnikow)
     {
         Random rand = new Random();
         List<osobnik> osoby = new List<osobnik>();
         for (int i = 0; i < osobnikow - 1; i++)
         {
             osobnik[] rywale = new osobnik[TurRozm];
-            int[] pamiec = new int[TurRozm];
             for (int j = 0; j < TurRozm; j++)
             {
                 int x1 = rand.Next(osobnikow);
-                pamiec[j] = x1;
-                for (int j2 = 0; j2 < pamiec.Length; j2++)
-                {
-                    while (pamiec[j2] == x1)
-                    {
-                        x1 = rand.Next(osobnikow);
-                    }
-                }
                 rywale[j] = populacja[x1];
             }
+
             osobnik max = rywale[0];
-            for (int j = 0; j < TurRozm; j++)
+            for (int k = 1; k < TurRozm; k++)
             {
-                if (max.przystosowanie < rywale[j].przystosowanie)
+                if (max.przystosowanie < rywale[k].przystosowanie)
                 {
-                    max = rywale[j];
+                    max = rywale[k];
                 }
             }
             osoby.Add(max);
@@ -154,17 +149,23 @@ class program
     }
     static List<osobnik> mutacja(List<osobnik> populacja)
     {
+        double prawdopodobienstwoMutacji = 0.2;
         Random rand = new Random();
-        for (int i = 5; i < populacja.Count;i++)
+        foreach (osobnik osoby in populacja)
         {
-            int x1 = rand.Next(populacja[i].chromosony.Length);
-            if (populacja[i].chromosony[x1] == 0)
+            for (int i = 0; i < osoby.chromosony.Length; i++)
             {
-                populacja[i].chromosony[x1] = 1;
-            }
-            else
-            {
-                populacja[i].chromosony[x1] = 0;
+                if (rand.NextDouble() < prawdopodobienstwoMutacji)
+                {
+                    if (osoby.chromosony[i] == 0)
+                    {
+                        osoby.chromosony[i] = 1;
+                    }
+                    else
+                    {
+                        osoby.chromosony[i] = 0;
+                    }
+                }
             }
         }
         return populacja;
@@ -182,3 +183,4 @@ class program
         return najlepszy;
     }
 }
+
