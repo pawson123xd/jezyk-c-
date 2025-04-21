@@ -4,24 +4,49 @@ namespace program
     {
         public double[] wag;
         public double przystosowanie = 0;
+        public byte[] chromosomy;
         public Osobnik()
         {
             wag = new double[3 * 3];
+            chromosomy=new byte[36];
             Random random = new Random();
-            for (int i = 0; i < wag.Length; i++)
+
+            for (int i = 0; i < chromosomy.Length; i++)
             {
-                wag[i] = random.NextDouble() * 20 - 10;
+                chromosomy[i] = (byte)random.Next(0,2);
+            }
+        }
+        public void dekodowanie(int ZBMIN, int ZBMAX)
+        {
+            int zb = ZBMAX - ZBMIN;
+            int miejsce = 35;
+            double ctmp;
+            ctmp = chromosomy[miejsce] * Math.Pow(2, 3) + chromosomy[miejsce - 1] * Math.Pow(2, 2) + chromosomy[miejsce - 2] * Math.Pow(2, 2) + chromosomy[miejsce - 3] * Math.Pow(2, 3);
+            miejsce -= 3;
+            double wynik = (Math.Pow(2, 4)) - 1;
+            wynik = ctmp / wynik;
+            double pm = ZBMIN + (wynik * zb);
+            wag[0] = pm;
+            for (int i = 1; i < 9; i++)
+            {
+                double ctmp1;
+                ctmp1 = chromosomy[miejsce] * Math.Pow(2, 3)+chromosomy[miejsce-1] * Math.Pow(2, 2) + chromosomy[miejsce - 2] * Math.Pow(2, 2) + chromosomy[miejsce - 3] * Math.Pow(2, 3);
+                miejsce -= 4;
+                double wynik1 = (Math.Pow(2, 4)) - 1;
+                wynik = ctmp1 / wynik1;
+                double pm1 = ZBMIN + (wynik1 * zb);
+                wag[i] = pm1;
             }
         }
         public void Przystowanie()
         {
+            dekodowanie(-10, 10);
             byte[,] daneWejsciowe = { { 0, 0 }, { 0, 1 }, { 1, 0 }, { 1, 1 } };
             for (int i = 0; i < 4; i++)
             {
                 double wynik = Aktywacja(daneWejsciowe[i, 0], daneWejsciowe[i, 1]);
                 przystosowanie += Math.Pow((daneWejsciowe[i, 0]^daneWejsciowe[i, 1]) - wynik, 2);
             }
-            
         }
 
         private double Aktywacja(byte we1, byte we2)
@@ -36,7 +61,6 @@ namespace program
             suma += wag[6] * we1;
             suma += wag[7] * we2;
             suma += wag[8];
-
             return Sigmoida(suma);
         }
         private double Sigmoida(double x)
@@ -75,7 +99,7 @@ namespace program
                 kryzowanie(pokolenie[2], pokolenie[3]);
                 kryzowanie(pokolenie[8], pokolenie[9]);
                 kryzowanie(pokolenie[pokolenie.Count-2], pokolenie[pokolenie.Count-1]);
-                pokolenie=mutacja(pokolenie);
+                pokolenie= mutacja(pokolenie);
                 pokolenie.Add(hot_deck(stare));
                 Osobnik najlepszy = pokolenie[0];
                 foreach(Osobnik osoba in pokolenie)
@@ -129,21 +153,34 @@ namespace program
         static void kryzowanie(Osobnik x1, Osobnik x2)
         {
             Random rand = new Random();
-            int cienicie = rand.Next(9 - 2);
-            for (int i = cienicie + 1; i < 9; i++)
+            int cienicie = rand.Next(4 - 2);
+            for (int i = cienicie + 1; i < 4; i++)
             {
-                double pamieć = x1.wag[i];
-                x1.wag[i] = x2.wag[i];
-                x2.wag[i] = pamieć;
+                byte pamieć = x1.chromosomy[i];
+                x1.chromosomy[i] = x2.chromosomy[i];
+                x2.chromosomy[i] = pamieć;
             }
         }
         static List<Osobnik> mutacja(List<Osobnik> populacja)
         {
+            double prawdopodobienstwoMutacji = 0.2;
             Random rand = new Random();
-            for (int i = 5; i < populacja.Count; i++)
+            foreach (Osobnik osoby in populacja)
             {
-                int x1 = rand.Next(populacja[i].wag.Length);
-                populacja[i].wag[x1] = populacja[i].wag[x1] * -1;
+                for (int i = 0; i < osoby.chromosomy.Length; i++)
+                {
+                    if (rand.NextDouble() < prawdopodobienstwoMutacji)
+                    {
+                        if (osoby.chromosomy[i] == 0)
+                        {
+                            osoby.chromosomy[i] = 1;
+                        }
+                        else
+                        {
+                            osoby.chromosomy[i] = 0;
+                        }
+                    }
+                }
             }
             return populacja;
         }
