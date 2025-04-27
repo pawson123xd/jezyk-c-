@@ -153,7 +153,7 @@ namespace program
         static void kryzowanie(Osobnik x1, Osobnik x2)
         {
             Random rand = new Random();
-            int cienicie = rand.Next(4 - 2);
+            int cienicie = rand.Next(36 - 2);
             for (int i = cienicie + 1; i < 4; i++)
             {
                 byte pamieć = x1.chromosomy[i];
@@ -161,29 +161,29 @@ namespace program
                 x2.chromosomy[i] = pamieć;
             }
         }
-        static List<Osobnik> mutacja(List<Osobnik> populacja)
+    static List<Osobnik> mutacja(List<Osobnik> populacja)
+    {
+        double prawdopodobienstwoMutacji = 0.2;
+        Random rand = new Random();
+        for(int j = 4; j < populacja.Count; j++)
         {
-            double prawdopodobienstwoMutacji = 0.2;
-            Random rand = new Random();
-            foreach (Osobnik osoby in populacja)
+            for (int i = 0; i < populacja[j].chromosomy.Length; i++)
             {
-                for (int i = 0; i < osoby.chromosomy.Length; i++)
+                if (rand.NextDouble() < prawdopodobienstwoMutacji)
                 {
-                    if (rand.NextDouble() < prawdopodobienstwoMutacji)
+                    if (populacja[j].chromosomy[i] == 0)
                     {
-                        if (osoby.chromosomy[i] == 0)
-                        {
-                            osoby.chromosomy[i] = 1;
-                        }
-                        else
-                        {
-                            osoby.chromosomy[i] = 0;
-                        }
+                        populacja[j].chromosomy[i] = 1;
+                    }
+                    else
+                    {
+                        populacja[j].chromosomy[i] = 0;
                     }
                 }
             }
-            return populacja;
         }
+        return populacja;
+    }
         static Osobnik hot_deck(List<Osobnik> osoby)
         {
             Osobnik najlepszy = osoby[0];
