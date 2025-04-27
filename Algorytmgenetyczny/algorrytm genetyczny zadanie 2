@@ -3,14 +3,14 @@ class program
     class osobnik
     {
         Random random = new Random();
-        public byte[] chromosony;
+        public byte[] chromosomy;
         public double przystosowanie;
         public osobnik(int LBnP)
         {
-            chromosony = new byte[LBnP * 3];
-            for (int i = 0; i < chromosony.Length; i++)
+            chromosomy = new byte[LBnP * 3];
+            for (int i = 0; i < chromosomy.Length; i++)
             {
-                chromosony[i] = (byte)random.Next(0,2);
+                chromosomy[i] = (byte)random.Next(0,2);
             }
         }
         public double dekodowanie(int ZBMIN, int ZBMAX, int lbnp, ref int miejsce)
@@ -19,12 +19,20 @@ class program
             double ctmp = 0.0;
             for (int i = 0; i < lbnp; i++)
             {
-                ctmp += this.chromosony[miejsce - i] * Math.Pow(2, i);
+                ctmp += this.chromosomy[miejsce] * Math.Pow(2, i);
+                miejsce--;
             }
             double wynik = (Math.Pow(2, lbnp)) - 1;
             wynik = ctmp / wynik;
             double pm = ZBMIN + (wynik * zb);
-            return pm;
+            return Math.Round(pm,4);
+        }
+        public osobnik Clone()
+        {
+            osobnik nowy = new osobnik(this.chromosomy.Length / 3);
+            this.chromosomy.CopyTo(nowy.chromosomy, 0);
+            nowy.przystosowanie = this.przystosowanie;
+            return nowy;
         }
     }
     public static void Main(string[] args)
@@ -94,8 +102,8 @@ class program
                 miejsce = LBnP * 3 - 1;
                 suma += osoba.przystosowanie;
             }
-            suma =suma / pokolenie.Count;
-            Console.WriteLine("najlepszy z nowego pokelenia to {0} srednia przystowania wynoś {1}", najlepszy.przystosowanie,suma);
+            suma /= pokolenie.Count;
+            Console.WriteLine("najlepszy z nowego pokelenia to {0} srednia przystowania wynoś {1}", Math.Round(najlepszy.przystosowanie, 4), Math.Round(suma, 4));
             stare = pokolenie;
         }
     }
@@ -107,7 +115,7 @@ class program
         for (int i = 0; i <y.Length; i++)
         {
             double wynik = y[i] - (pa * Math.Sin((pb * x[i]) + pc));
-            suma += Math.Pow(wynik,2);
+            suma += Math.Round(Math.Pow(wynik,2),4);
         }
         return suma;
     }
@@ -125,45 +133,41 @@ class program
             }
 
             osobnik max = rywale[0];
-            for (int k = 1; k < TurRozm; k++)
+            for (int k = 0; k < TurRozm; k++)
             {
                 if (max.przystosowanie < rywale[k].przystosowanie)
                 {
                     max = rywale[k];
                 }
             }
-            osoby.Add(max);
+            osoby.Add(max.Clone());
         }
         return osoby;
     }
     static void kryzowanie(osobnik x1,osobnik x2,int LBnP)
     {
         Random rand = new Random();
-        int cienicie=rand.Next(LBnP-2);
+        int cienicie=rand.Next(0,(LBnP*3)-2);
         for (int i = cienicie+1;i < LBnP; i++)
         {
-            byte pamieć = x1.chromosony[i];
-            x1.chromosony[i]=x2.chromosony[i];
-            x2.chromosony[i] = pamieć;
+            byte pamieć = x1.chromosomy[i];
+            x1.chromosomy[i]=x2.chromosomy[i];
+            x2.chromosomy[i] = pamieć;
         }
     }
     static List<osobnik> mutacja(List<osobnik> populacja)
     {
         double prawdopodobienstwoMutacji = 0.2;
         Random rand = new Random();
-        foreach (osobnik osoby in populacja)
+        for(int j = 4; j < populacja.Count; j++)
         {
-            for (int i = 0; i < osoby.chromosony.Length; i++)
+            for (int i = 0; i < populacja[j].chromosomy.Length; i++)
             {
                 if (rand.NextDouble() < prawdopodobienstwoMutacji)
                 {
-                    if (osoby.chromosony[i] == 0)
+                    if (rand.NextDouble() < prawdopodobienstwoMutacji)
                     {
-                        osoby.chromosony[i] = 1;
-                    }
-                    else
-                    {
-                        osoby.chromosony[i] = 0;
+                        populacja[j].chromosomy[i] = (byte)(1 - populacja[j].chromosomy[i]);
                     }
                 }
             }
