@@ -8,7 +8,7 @@ namespace program
         public Osobnik()
         {
             wag = new double[3 * 3];
-            chromosomy=new byte[36];
+            chromosomy=new byte[9 *4];
             Random random = new Random();
 
             for (int i = 0; i < chromosomy.Length; i++)
@@ -18,34 +18,38 @@ namespace program
         }
         public void dekodowanie(int ZBMIN, int ZBMAX)
         {
-            int zb = ZBMAX - ZBMIN;
-            int miejsce = 35;
-            double ctmp;
-            ctmp = chromosomy[miejsce] * Math.Pow(2, 3) + chromosomy[miejsce - 1] * Math.Pow(2, 2) + chromosomy[miejsce - 2] * Math.Pow(2, 2) + chromosomy[miejsce - 3] * Math.Pow(2, 3);
-            miejsce -= 3;
-            double wynik = (Math.Pow(2, 4)) - 1;
-            wynik = ctmp / wynik;
-            double pm = ZBMIN + (wynik * zb);
-            wag[0] = pm;
-            for (int i = 1; i < 9; i++)
+            double zb = ZBMAX - ZBMIN;
+            for (int g = 0; g < 9; g++)
             {
-                double ctmp1;
-                ctmp1 = chromosomy[miejsce] * Math.Pow(2, 3)+chromosomy[miejsce-1] * Math.Pow(2, 2) + chromosomy[miejsce - 2] * Math.Pow(2, 2) + chromosomy[miejsce - 3] * Math.Pow(2, 3);
-                miejsce -= 4;
-                double wynik1 = (Math.Pow(2, 4)) - 1;
-                wynik = ctmp1 / wynik1;
-                double pm1 = ZBMIN + (wynik1 * zb);
-                wag[i] = pm1;
+                int miejsce = g * 4;
+                int intVal = 0;
+
+                for (int b = 0; b < 4; b++)
+                {
+                    intVal = intVal*2+chromosomy[miejsce + b];
+                    Console.WriteLine(intVal);
+                }
+                double fraction = (double)intVal / (Math.Pow(2,4) - 1);
+                wag[g] = ZBMIN + fraction * zb;
             }
+        }
+        public Osobnik Clone()
+        {
+            Osobnik nowy = new Osobnik();
+            this.chromosomy.CopyTo(nowy.chromosomy, 0);
+            nowy.przystosowanie = this.przystosowanie;
+            return nowy;
         }
         public void Przystowanie()
         {
             dekodowanie(-10, 10);
             byte[,] daneWejsciowe = { { 0, 0 }, { 0, 1 }, { 1, 0 }, { 1, 1 } };
+            przystosowanie = 0;
             for (int i = 0; i < 4; i++)
             {
                 double wynik = Aktywacja(daneWejsciowe[i, 0], daneWejsciowe[i, 1]);
-                przystosowanie += Math.Pow((daneWejsciowe[i, 0]^daneWejsciowe[i, 1]) - wynik, 2);
+                double ocz = (byte)(daneWejsciowe[i, 0] ^ daneWejsciowe[i, 1]);
+                przystosowanie += Math.Pow(ocz - wynik, 2);
             }
         }
 
@@ -105,14 +109,14 @@ namespace program
                 foreach(Osobnik osoba in pokolenie)
                 {
                     osoba.Przystowanie();
-                    if (najlepszy.przystosowanie < osoba.przystosowanie)
+                    if (najlepszy.przystosowanie > osoba.przystosowanie)
                     {
                         najlepszy = osoba;
                     }
                     srednia += osoba.przystosowanie;
                 }
                 srednia = srednia / pokolenie.Count;
-                Console.WriteLine("srednia jest rowna {0} a najlepszy {1}", srednia,najlepszy.przystosowanie);
+                Console.WriteLine("srednia jest rowna {0} a najmniejszy {1}", srednia,najlepszy.przystosowanie);
                 stare = pokolenie;
             }
         }
@@ -140,12 +144,12 @@ namespace program
                 Osobnik max = rywale[0];
                 for (int j = 0; j < 3; j++)
                 {
-                    if (max.przystosowanie < rywale[j].przystosowanie)
+                    if (max.przystosowanie > rywale[j].przystosowanie)
                     {
                         max = rywale[j];
                     }
                 }
-                osoby.Add(max);
+                osoby.Add(max.Clone());
             }
             return osoby;
         }
@@ -153,8 +157,8 @@ namespace program
         static void kryzowanie(Osobnik x1, Osobnik x2)
         {
             Random rand = new Random();
-            int cienicie = rand.Next(36 - 2);
-            for (int i = cienicie + 1; i < 4; i++)
+            int cienicie = rand.Next(0,35- 2);
+            for (int i = cienicie + 1; i < x1.chromosomy.Length; i++)
             {
                 byte pamieć = x1.chromosomy[i];
                 x1.chromosomy[i] = x2.chromosomy[i];
@@ -194,7 +198,7 @@ namespace program
                     najlepszy = osob;
                 }
             }
-            return najlepszy;
+            return najlepszy.Clone();
         }
     }
 }
