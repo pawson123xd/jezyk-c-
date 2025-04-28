@@ -27,7 +27,6 @@ namespace program
                 for (int b = 0; b < 4; b++)
                 {
                     intVal = intVal*2+chromosomy[miejsce + b];
-                    Console.WriteLine(intVal);
                 }
                 double fraction = (double)intVal / (Math.Pow(2,4) - 1);
                 wag[g] = ZBMIN + fraction * zb;
