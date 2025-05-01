@@ -51,18 +51,14 @@ namespace program
                 przystosowanie += Math.Pow(ocz - wynik, 2);
             }
         }
-
         private double Aktywacja(byte we1, byte we2)
         {
             double suma = 0;
-            suma += wag[0] * we1;
-            suma += wag[1] * we2;
-            suma += wag[2];
-            suma += wag[3] * we1;
-            suma += wag[4] * we2;
-            suma += wag[5];
-            suma += wag[6] * we1;
-            suma += wag[7] * we2;
+            double[] neuron = new double[2];
+            neuron[0] = Sigmoida(wag[0] * we1 + wag[1] * we2 + wag[2]);
+            neuron[1] = Sigmoida(wag[3] * we1 + wag[4] * we2 + wag[5]);
+            suma += wag[6] * neuron[0];
+            suma += wag[7] * neuron[1];
             suma += wag[8];
             return Sigmoida(suma);
         }
