@@ -57,8 +57,8 @@ namespace program
             double[] neuron = new double[2];
             neuron[0] = Sigmoida(wag[0] * we1 + wag[1] * we2 + wag[2]);
             neuron[1] = Sigmoida(wag[3] * we1 + wag[4] * we2 + wag[5]);
-            suma += neuron[0]*wag[6] ;
-            suma += neuron[1]*wag[7];
+            suma += wag[6]* neuron[0];
+            suma += wag[7]* neuron[1];
             suma += wag[8];
             return Sigmoida(suma);
         }
