@@ -1,0 +1,111 @@
+class sieć
+{
+    public double[,] warstwy = new double[2, 2];
+    public double[] wagi = new double[12];
+    public double[] bias = new double[6];
+    public double[] wyscia = new double[2];
+    public sieć()
+    {
+        Random rand = new Random();
+        for (int i = 0; i < bias.Length; i++)
+        {
+            bias[i] = rand.NextDouble() * 10 - 5;
+        }
+        for (int i = 0; i < wagi.Length; i++)
+        {
+            wagi[i] = rand.NextDouble() * 10 - 5;
+        }
+        for (int i = 0; i < warstwy.GetLength(0); i++)
+        {
+            for (int j = 0; j < warstwy.GetLength(1); j++)
+            {
+                warstwy[i, j] = 0;
+            }
+        }
+    }
+    public void tranig(int epok, double u)
+    {
+        int[,] wejscia = { { 0, 0 }, { 0, 1 }, { 1, 0 }, { 1, 1 } };
+        int[,] wyjscie = { { 0, 1 }, {1,0}, { 1,0}, { 0, 0 } };
+        int[] wyjscie1 = { 1, 0, 0, 0 };
+        for (int j = 0; j < epok; j++)
+        {
+            double[] error=new double[wyjscie.Length];
+            for(int i=0; i<error.Length; i++) { 
+                error[i] = 0; 
+            }
+            List<double> kopia_wagi= new List<double>();
+            List<double> kopia_bias = new List<double>();
+            for (int i = 0; i < wagi.Length; i++) {
+                kopia_wagi.Add(wagi[i]);
+            }
+            for (int i = 0; i < bias.Length; i++)
+            {
+                kopia_bias.Add(bias[i]);
+            }
+            for (int i = 0; i < wejscia.GetLength(0); i++)
+            {
+                int wagi_miejsce = 0;
+                int bias_miejsce = 0;
+                for (int k = 0; k < warstwy.GetLength(1); k++)
+                {
+                    warstwy[0, k] = sigmain((wejscia[i, 0] * wagi[wagi_miejsce] + wejscia[i, 1] * wagi[wagi_miejsce + 1]) + bias[bias_miejsce]);
+                    bias_miejsce += 1;
+                    wagi_miejsce += 2;
+                }
+                for (int k = 1; k < warstwy.GetLength(0); k++)
+                {
+                    for (int k1 = 0; k1 < warstwy.GetLength(1); k1++)
+                    {
+                        for (int k2 = 0; k2 < warstwy.GetLength(1); k2++)
+                        {
+                            warstwy[k, k1] += warstwy[k - 1, k2] * wagi[wagi_miejsce];
+                            wagi_miejsce += 1;
+                        }
+                        warstwy[k, k1] += bias[bias_miejsce];
+                        warstwy[k, k1] = sigmain(warstwy[k, k1]);
+                        bias_miejsce += 1;
+                    }
+                }
+                for (int k = 0; k < wyscia.Length; k++)
+                {
+                    wyscia[k] += sigmain((warstwy[warstwy.GetLength(0)-1, 0] * wagi[wagi_miejsce] + warstwy[warstwy.GetLength(0) - 1, 0] * wagi[wagi_miejsce + 1]) + bias[bias_miejsce]);
+                    bias_miejsce += 1;
+                    wagi_miejsce += 2;
+                }
+                bias_miejsce -= 1;
+                wagi_miejsce -= 1;
+                for (int k = 0; k < wyscia.Length; k++)
+                {
+                    for (int l = 0; l < wyjscie.GetLength(0); l++)
+                    {
+                        double blad = wyjscie[l, i] - wyscia[k];
+                        error[l]+=Math.Pow(blad, 2);
+                        blad = blad * u;
+                        blad = pochodnasigmain(wyscia[k], blad);
+
+                    }
+                }
+
+            }
+        }
+    }
+    public double sigmain(double x)
+    {
+        return (1 / (1 + Math.Exp(-x)));
+    }
+    public double pochodnasigmain(double x, double y)
+    {
+        return y * x * (1 - x);
+    }
+}
+class program
+{
+    static void Main(string[] args)
+    {
+        sieć Siec = new sieć();
+        int epok = 1;
+        double u = 0.3;
+        Siec.tranig(epok, u);
+    }
+}
