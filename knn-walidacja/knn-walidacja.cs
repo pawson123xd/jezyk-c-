@@ -1,10 +1,17 @@
 using System;
+
 using System.Collections.Generic;
+
 using System.Globalization;
+
 using System.IO;
+
 using System.Linq;
+
 using System.Text;
+
 using System.Text.RegularExpressions;
+
 class dane
 {
     public List<double[]> list = new List<double[]>();
@@ -22,8 +29,7 @@ class dane
                 string line;
                 while ((line = reader.ReadLine()) != null)
                 {
-
-                    string[] str = Regex.Replace(line, @"\s", " ").Replace(".", ",").Split(" ");
+                    string[] str = Regex.Replace(line, @"\s", " ").Replace(".", ",").Split(' ');
                     double[] d = new double[str.Length];
                     for (int i = 0; i < str.Length; i++)
                     {
@@ -32,7 +38,6 @@ class dane
                     list.Add(d);
                 }
             }
-
         }
         catch (FileNotFoundException)
         {
@@ -45,35 +50,38 @@ class dane
     }
     private void zmomalizować()
     {
-        for (int i = 0; i < list[0].Length-1; i++)
+        for (int i = 0; i < list[0].Length - 1; i++)
         {
             double max = list[i][0];
             double min = list[i][0];
             for (int j = 0; j < list.Count; j++)
             {
-                if(min > list[j][i])
+                if (min > list[j][i])
                 {
-                    min= list[j][i];
+                    min = list[j][i];
                 }
                 if (max < list[j][i])
                 {
-                    max= list[j][i];
+                    max = list[j][i];
                 }
             }
-            for (int j = 0; j < list.Count; j++) {
-                list[j][i] = (list[j][i]-min)/(max-min);
+            for (int j = 0; j < list.Count; j++)
+            {
+                list[j][i] = (list[j][i] - min) / (max - min);
             }
         }
     }
-    class klasyfikacja:dane
+    class klasyfikacja : dane
     {
-        public delegate double metyka(double[] a,double[] b);
+        public delegate double metyka(double[] a, double[] b);
         public delegate double sprawdze(double[] a, double[] b);
-        private List<double[]> test= new List<double[]>(); 
+        private List<double[]> test = new List<double[]>();
         private int k = 0;
-        public klasyfikacja(int k=0):base() { 
+        public klasyfikacja(int k = 0) : base()
+        {
             this.k = k;
-            if (k <= 0) { 
+            if (k <= 0)
+            {
                 k = 2;
             }
             walidacja();
@@ -83,37 +91,89 @@ class dane
             double wynik = 0;
             for (int i = 0; i < a.Length - 1; i++)
             {
-                wynik += Math.Round(Math.Abs(a[i] - b[i]),2);
+                wynik += Math.Round(Math.Abs(a[i] - b[i]), 2);
             }
             return wynik;
         }
         private void walidacja()
         {
             metyka m = manhattan;
-            for(int i = 0; i < list.Count-k;i++)
+            for (int i = 0; i < list.Count; i++)
             {
-                double[,] wynik=new double[k,3];
-                int j2 = 0;
-                for (int j = i;j < i+k; j++)
+                double[,] pamieć = new double[list.Count, 2];
+                for (int j = 0; j < list.Count; j++)
                 {
-                    wynik[j2, 0] = j;
-                    wynik[j2, 1] = m(list[i], list[j]);
-                    wynik[j2, 2] = list[j][list[j].Length-1];
-                    j2++;
+                    if (j == i)
+                    {
+                        pamieć[j, 0] = 0;
+                        pamieć[j, 1] = list[j][list[j].Length - 1];
+                        continue;
+                    }
+                    pamieć[j, 0] = m(list[i], list[j]);
+                    pamieć[j, 1] = list[j][list[j].Length - 1];
                 }
-                sprawdzenie(wynik, i);
-                Console.WriteLine();
+                grupowanie(pamieć);
+                break;
             }
         }
-        private bool sprawdzenie(double[,] wynik,int w)
+        private List<double[]> grupowanie(double[,] a)
+        {
+            List<double> klasy = new List<double>();
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (klasy.Contains(list[i][list[i].Length - 1]))
+                {
+                    continue;
+                }
+                klasy.Add(list[i][list[i].Length - 1]);
+            }
+            List<double[]> wynik = new List<double[]>();
+            for (int i = 0; i < klasy.Count; i++)
+            {
+                List<double> klasa = new List<double>();
+                for (int j = 0; j < a.GetLength(0); j++)
+                {
+                    if (klasy[i] == a[j, 1])
+                    {
+                        klasa.Add(a[j, 0]);
+                    }
+                }
+                for (int j = 0; j < klasa.Count; j++)
+                {
+                    Console.WriteLine(klasa[j]);
+                }
+                Console.WriteLine();
+                Console.WriteLine(klasy[i]);
+                Console.WriteLine();
+                for (int j = 0; j < k; j++)
+                {
+                    double min = klasa[0];
+                    for (int l = 0; l < klasa.Count; l++)
+                    {
+                        if (min > klasa[l] && klasa[l]!=0 || min == 0)
+                        {
+                            min = klasa[l];
+                        }
+                    }
+                    klasa.Remove(min);
+                    wynik.Add([min,klasy[i]]);
+                }
+            }
+            for (int i = 0; i < wynik.Count; i++)
+            {
+                Console.WriteLine("{0},{1}", wynik[i][0], wynik[i][1]);
+            }
+            return wynik;
+        }
+        private bool sprawdzenie(double[,] wynik, int w)
         {
             Console.WriteLine("testowa probka {0}", list[w][list[w].Length - 1]);
             Dictionary<double, int> licznik = new Dictionary<double, int>();
-            bool test=true;
+            bool test = true;
             double[] pamieć = new double[k];
             for (int i = 0; i < k; i++)
             {
-                bool pamiec=false;
+                bool pamiec = false;
                 int j2 = 0;
                 for (int j = 0; j < k; j++)
                 {
@@ -136,7 +196,7 @@ class dane
                 pamieć[i] = wynik[i, 2];
                 licznik.Add(wynik[i, 2], j2);
             }
-            double[] max = {0, 0};
+            double[] max = { 0, 0 };
             foreach (KeyValuePair<double, int> kvp in licznik)
             {
                 if (max[1] < kvp.Value)
@@ -149,18 +209,20 @@ class dane
             int j3 = 0;
             foreach (KeyValuePair<double, int> kvp in licznik)
             {
-                if (max[1]==kvp.Value)
+                if (max[1] == kvp.Value)
                 {
                     j3++;
                 }
             }
             Console.WriteLine(j3);
-            if(j3 >= 2) {
+            if (j3 >= 2)
+            {
                 Console.WriteLine("bład Klasyfikacja ");
                 return false;
             }
-            else {
-                if (max[0] == list[w][list[w].Length-1])
+            else
+            {
+                if (max[0] == list[w][list[w].Length - 1])
                 {
                     Console.WriteLine("poprana Klasyfikacja");
                     Console.WriteLine("Przewidywana klasa {0}", max[0]);
@@ -176,7 +238,8 @@ class dane
         static void Main(string[] args)
         {
             klasyfikacja dane = new klasyfikacja(3);
-
+            Console.ReadKey();
         }
     }
 }
+
