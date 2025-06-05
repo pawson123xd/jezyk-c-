@@ -19,7 +19,7 @@ class dane
         /*
         try
         {
-            using (StreamReader reader = new StreamReader("C:\\Users\\Pawson\\source\\repos\\knn walidacja\\dane.txt")) // można wczytać z pliku ale trzeba podać scierzke do pliku 
+            using (StreamReader reader = new StreamReader("C:\\")) // można wczytać z pliku ale trzeba podać scierzke do pliku 
             {
                 string line;
                 while ((line = reader.ReadLine()) != null)
