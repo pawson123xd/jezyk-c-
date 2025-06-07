@@ -2,7 +2,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 class sieć
 {
-    List<double[]> warstwy = new List<double[]>();
+    public List<double[]> warstwy = new List<double[]>();
     public double[] wagi;
     public double[] bias;
     public sieć(int wagi_miejsce, int bias_miejsce, List<double[]> warstwy)
@@ -12,7 +12,7 @@ class sieć
         bias = new double[bias_miejsce];
         for (int i = 0; i < wagi_miejsce; i++)
         {
-            wagi[i] = rand.NextDouble()*10-5;
+            wagi[i] = rand.NextDouble() * 10 - 5;
         }
         for (int i = 0; i < bias_miejsce; i++)
         {
@@ -70,12 +70,12 @@ class sieć
         {
             kopia_wagi.Add(wagi[j]);
         }
-        for(int j= warstwy[warstwy.Count - 1].Length - 1; j >= 0; j--)
+        for (int j = warstwy[warstwy.Count - 1].Length - 1; j >= 0; j--)
         {
-            double blad = wyjscie[i, j] - warstwy[warstwy.Count-1][j];
-            error[j] += Math.Pow(blad,2);
+            double blad = wyjscie[i, j] - warstwy[warstwy.Count - 1][j];
+            error[j] += Math.Pow(blad, 2);
             blad = blad * u;
-            warstwy[warstwy.Count - 1][j]=pochodnasigmain(warstwy[warstwy.Count - 1][j], blad);
+            warstwy[warstwy.Count - 1][j] = pochodnasigmain(warstwy[warstwy.Count - 1][j], blad);
             kopia_bias[bias_miejsce] += warstwy[warstwy.Count - 1][j];
             bias_miejsce--;
         }
@@ -88,23 +88,23 @@ class sieć
                 int kopia_wagi1 = wagi_miejsce;
                 for (int l = warstwy[j + 1].Length - 1; l >= 0; l--)
                 {
-                    kopia_wagi[kopia_wagi1] += warstwy[j + 1][l]*warstwy[j][k];
+                    kopia_wagi[kopia_wagi1] += warstwy[j + 1][l] * warstwy[j][k];
                     kopia_wagi1 -= warstwy[j].Length;
                 }
                 kopia_wagi1 = wagi_miejsce;
-                for (int l = warstwy[j+1].Length - 1; l >= 0; l--)
+                for (int l = warstwy[j + 1].Length - 1; l >= 0; l--)
                 {
                     suma += warstwy[j + 1][l] * wagi[kopia_wagi1];
                     kopia_wagi1 -= warstwy[j].Length;
-   
+
                 }
                 warstwy[j][k] = pochodnasigmain(warstwy[j][k], suma);
-                kopia_bias[bias_miejsce] -=warstwy[j][k];
+                kopia_bias[bias_miejsce] -= warstwy[j][k];
                 bias_miejsce--;
                 if (k == 0)
                 {
-                    wagi_miejsce +=licznik ;
-                    wagi_miejsce -= warstwy[j].Length*warstwy[j+1].Length;
+                    wagi_miejsce += licznik;
+                    wagi_miejsce -= warstwy[j].Length * warstwy[j + 1].Length;
                 }
                 else
                 {
@@ -149,8 +149,9 @@ class sieć
                 propagacja_wsteczna(ref error, u, wejscia, wyjscie, ref wagi_miejsce, ref bias_miejsce, i);
                 propagacja(ref wagi_miejsce, ref bias_miejsce, wejscia, i);
             }
-            for (int i = 0; i < error.Length; i++) {
-                    Console.WriteLine(error[i]);
+            for (int i = 0; i < error.Length; i++)
+            {
+                Console.WriteLine(error[i]);
             }
         }
     }
@@ -167,12 +168,36 @@ class program
 {
     static void Main(string[] args)
     {
-       //int[,] wejscia = { { 0, 0,0 },  { 0, 1,0 }, { 1, 0 ,0}, { 1, 1 ,0}, { 0,0,1 }, { 0, 1, 1 }, { 1, 0, 1 }, { 1, 1, 1 }};
-       //int[,] wyjscie = { {0 ,0}, { 1,0 }, { 1,0 }, { 0, 1 }, { 1, 0 }, { 0, 1 }, { 0, 1 }, { 1, 1 } };
-        int[,] wejscia = { { 0, 0},  { 0, 1}, { 1, 0}, { 1, 1 }};
-        int[,] wyjscie = { {0 }, { 1}, { 1 }, { 0 } };
-     // int[,] wejscia = { { 0, 0 }, { 0, 1 }, { 1, 0 }, { 1, 1 } };
-      //int[,] wyjscie = { { 0, 1 }, { 1, 0 }, { 1, 0 }, { 0, 0 } };
+        int[,] wejscia=null;
+        int[,] wyjscie = null;
+        Console.WriteLine("numer 1 wejscia: { { 0, 0 }, { 0, 1 }, { 1, 0 }, { 1, 1 } } i wejscie: { { 0 }, { 1 }, { 1 }, { 0 } }");
+        Console.WriteLine("numer 2 wejscia: { { 0, 0 }, { 0, 1 }, { 1, 0 }, { 1, 1 } } i wejscie: { 0, 1 }, { 1, 0 }, { 1, 0 }, { 0, 0 }");
+        Console.WriteLine("numer 3 wejscia: { { 0, 0,0 },  { 0, 1,0 }, { 1, 0 ,0}, { 1, 1 ,0}, { 0,0,1 }, { 0, 1, 1 }, { 1, 0, 1 }, { 1, 1, 1 }}\ni wejscie: { {0 ,0}, { 1,0 }, { 1,0 }, { 0, 1 }, { 1, 0 }, { 0, 1 }, { 0, 1 }, { 1, 1 } }");
+        while (true) {
+            Console.WriteLine("podaj numer");
+            int numer = int.Parse(Console.ReadLine());
+            if (numer == 1) {
+                wejscia = new int[,]{ { 0, 0 }, { 0, 1 }, { 1, 0 }, { 1, 1 } };
+                wyjscie = new int[,]{ { 0 }, { 1 }, { 1 }, { 0 } };
+                break;
+            }
+            else if (numer == 2)
+            {
+                wejscia = new int[,] { { 0, 0 }, { 0, 1 }, { 1, 0 }, { 1, 1 } };
+                wyjscie = new int[,] { { 0, 1 }, { 1, 0 }, { 1, 0 }, { 0, 0 } };
+                break;
+            }
+            else if (numer == 3)
+            {
+                wejscia = new [,]{ { 0, 0,0 },  { 0, 1,0 }, { 1, 0 ,0}, { 1, 1 ,0}, { 0,0,1 }, { 0, 1, 1 }, { 1, 0, 1 }, { 1, 1, 1 }};
+                wyjscie = new [,]{ {0 ,0}, { 1,0 }, { 1,0 }, { 0, 1 }, { 1, 0 }, { 0, 1 }, { 0, 1 }, { 1, 1 } };
+                break;
+            }
+            else
+            {
+                Console.WriteLine("blad");
+            }
+        }
         List<double[]> warstwy = new List<double[]>();
         int wagi_miejsce = 0;
         int bias_miejsce = 0;
@@ -180,15 +205,17 @@ class program
         int ile_warst = int.Parse(Console.ReadLine());
         for (int i = 0; i < ile_warst; i++)
         {
+            int ile_neuronuw=0;
             if (i == ile_warst - 1)
             {
                 Console.WriteLine("Podaj ile neuronuw w warstwie wyjsciowy");
+                ile_neuronuw = wyjscie.GetLength(1);
             }
             else
             {
                 Console.WriteLine("Podaj ile neuronuw w warstwie " + (i + 1));
+                ile_neuronuw = int.Parse(Console.ReadLine());
             }
-            int ile_neuronuw = int.Parse(Console.ReadLine());
             double[] neuronuw = new double[ile_neuronuw];
             warstwy.Add(neuronuw);
             if (i == 0)
