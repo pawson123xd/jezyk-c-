@@ -38,10 +38,25 @@ namespace WinFormsApp2
                 warstwy = wycztaj1(wejscia, (int)licznik.Value, wyjscie);
                 sieć Siec = new sieć(wagi_miejsce, bias_miejsce, warstwy);
                 wyswietl.Text ="";
-                List<double> error1 = new List<double>();
-                error1=Siec.tranig(100,0.3,wejscia, wyjscie);
-                for (int i = 0; i < error1.Count; i++) {
-                    wyswietl.Text +="   ,"+error1[i];
+                var error1 = new List<KeyValuePair<string, double[]>>();
+                error1 = Siec.tranig(10, 0.3, wejscia, wyjscie);
+                int propagacja = 0;
+                foreach (KeyValuePair<string, double[]> kvp in error1)
+                {
+                    if (propagacja % 2 == 0)
+                    {
+                        wyswietl.Text += "przed " + kvp.Key + "        ";
+                    }
+                    else
+                    {
+                        wyswietl.Text += "po " + kvp.Key +"         ";
+                    }
+                    wyswietl.Text += "wynik :";
+                    for (int i = 0; i < kvp.Value.Length; i++)
+                    {
+                        wyswietl.Text += kvp.Value[i]+"      ";
+                    }
+                    propagacja++;
                 }
 
             }
@@ -76,13 +91,26 @@ namespace WinFormsApp2
                 warstwy = wycztaj1(wejscia, (int)licznik.Value, wyjscie);
                 sieć Siec = new sieć(wagi_miejsce, bias_miejsce, warstwy);
                 wyswietl.Text = "";
-                List<double> error1 = new List<double>();
-                error1 = Siec.tranig(100, 0.3, wejscia, wyjscie);
-                for (int i = 0; i < error1.Count; i++)
+                var error1 = new List<KeyValuePair<string, double[]>>();
+                error1 = Siec.tranig(10, 0.3, wejscia, wyjscie);
+                int propagacja = 0;
+                foreach (KeyValuePair<string, double[]> kvp in error1)
                 {
-                    wyswietl.Text += "   ." + error1[i];
+                    if (propagacja % 2 == 0)
+                    {
+                        wyswietl.Text += "przed " + kvp.Key;
+                    }
+                    else
+                    {
+                        wyswietl.Text += "po " + kvp.Key;
+                    }
+                    wyswietl.Text += "wynik";
+                    for (int i = 0; i < kvp.Value.Length; i++)
+                    {
+                        wyswietl.Text += kvp.Value[i];
+                    }
+                    propagacja++;
                 }
-
             }
         }
 
@@ -101,13 +129,25 @@ namespace WinFormsApp2
                 warstwy = wycztaj1(wejscia, (int)licznik.Value, wyjscie);
                 sieć Siec = new sieć(wagi_miejsce, bias_miejsce, warstwy);
                 wyswietl.Text = "";
-                List<double> error1 = new List<double>();
-                error1 = Siec.tranig(100, 0.3, wejscia, wyjscie);
-                for (int i = 0; i < error1.Count; i++)
+                var error1 = new List<KeyValuePair<string, double[]>>();
+                error1 = Siec.tranig(10, 0.3, wejscia, wyjscie);
+                int propagacja = 0;
+                foreach (KeyValuePair<string, double[]> kvp in error1)
                 {
-                    wyswietl.Text += "   ," + error1[i];
+                    if (propagacja % 2 == 0)
+                    {
+                        wyswietl.Text = "przed " +kvp.Key;
+                    }
+                    else
+                    {
+                        wyswietl.Text = "po " + kvp.Key;
+                    }
+                    wyswietl.Text = "wynik";
+                    for (int i = 0; i < kvp.Value.Length; i++) {
+                        wyswietl.Text += kvp.Value[i];
+                    }
+                    propagacja++;
                 }
-
             }
         }
         private void label4_Click(object sender, EventArgs e)
@@ -189,7 +229,7 @@ class sieć :Form1
             }
         }
     }
-    private void propagacja(ref int wagi_miejsce, ref int bias_miejsce, int[,] wejscia, int k)
+    private void propagacja(List<KeyValuePair<string, double[]>> wyniki , ref int wagi_miejsce, ref int bias_miejsce, int[,] wejscia, int k)
     {
         for (int i = 0; i < warstwy.Count; i++)
         {
@@ -218,9 +258,24 @@ class sieć :Form1
         }
         bias_miejsce--;
         wagi_miejsce--;
-
+        string wejsicia = "";
+        for (int i = 0; i < wejscia.GetLength(1); i++)
+        {
+            if (i == wejscia.GetLength(1) - 1)
+            {
+                wejsicia += wejscia[k, i];
+                break;
+            }
+            wejsicia += wejscia[k, i] + ",";
+        }
+        double[] wynik = new double[warstwy[warstwy.Count - 1].Length];
+        for (int i = 0; i < warstwy[warstwy.Count-1].Length; i++)
+        {
+            wynik[i] = warstwy[warstwy.Count - 1][i];
+        }
+        wyniki.Add(new KeyValuePair<string, double[]>(wejsicia, wynik));
     }
-    private void propagacja_wsteczna(ref double[] error, double u, int[,] wejscia, int[,] wyjscie, ref int wagi_miejsce, ref int bias_miejsce, int i)
+    private void propagacja_wsteczna(double u, int[,] wejscia, int[,] wyjscie, ref int wagi_miejsce, ref int bias_miejsce, int i)
     {
         List<double> kopia_bias = new List<double>();
         List<double> kopia_wagi = new List<double>();
@@ -235,7 +290,6 @@ class sieć :Form1
         for (int j = warstwy[warstwy.Count - 1].Length - 1; j >= 0; j--)
         {
             double blad = wyjscie[i, j] - warstwy[warstwy.Count - 1][j];
-            error[j] += Math.Pow(blad, 2);
             blad = blad * u;
             warstwy[warstwy.Count - 1][j] = pochodnasigmain(warstwy[warstwy.Count - 1][j], blad);
             kopia_bias[bias_miejsce] += warstwy[warstwy.Count - 1][j];
@@ -294,30 +348,21 @@ class sieć :Form1
         wagi_miejsce = 0;
         bias_miejsce = 0;
     }
-    public List<double> tranig(int epok, double u, int[,] wejscia, int[,] wyjscie)
+    public List<KeyValuePair<string, double[]>> tranig(int epok, double u, int[,] wejscia, int[,] wyjscie)
     {
-        List<double> error1 =new List<double>();
+        var wyniki = new List<KeyValuePair<string, double[]>>();
         for (int j = 0; j < epok; j++)
         {
-            double[] error = new double[warstwy[warstwy.Count - 1].Length];
-            for (int i = 0; i < error.Length; i++)
-            {
-                error[i] = 0;
-            }
             for (int i = 0; i < wejscia.GetLength(0); i++)
             {
                 int wagi_miejsce = 0;
                 int bias_miejsce = 0;
-                propagacja(ref wagi_miejsce, ref bias_miejsce, wejscia, i);
-                propagacja_wsteczna(ref error, u, wejscia, wyjscie, ref wagi_miejsce, ref bias_miejsce, i);
-                propagacja(ref wagi_miejsce, ref bias_miejsce, wejscia, i);
-            }
-            for (int i = 0; i < error.Length; i++)
-            {
-                error1.Add(error[i]);
+                propagacja(wyniki,ref wagi_miejsce, ref bias_miejsce, wejscia, i);
+                propagacja_wsteczna(u, wejscia, wyjscie, ref wagi_miejsce, ref bias_miejsce, i);
+                propagacja(wyniki,ref wagi_miejsce, ref bias_miejsce, wejscia, i);
             }
         }
-        return error1;
+        return wyniki;
     }
     public double sigmain(double x)
     {
