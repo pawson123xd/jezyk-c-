@@ -12,7 +12,7 @@ namespace WinFormsApp2
         public Form1()
         {
             InitializeComponent();
-            this.KeyPreview = true;            // waøne, øeby form przekazywa≥ KeyDown
+            this.KeyPreview = true;            // wa≈ºne, ≈ºeby form przekazywa≈Ç KeyDown
             this.KeyDown += Form1_KeyDown;
         }
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -20,7 +20,7 @@ namespace WinFormsApp2
             if (e.KeyCode == Keys.Enter)
             {
                 enterPressed = true;
-                e.Handled = true;   // opcjonalnie: zapobiega ìprzepuszczeniuî klawisza dalej
+                e.Handled = true;   // opcjonalnie: zapobiega ‚Äúprzepuszczeniu‚Äù klawisza dalej
             }
         }
         private void button1_Click(object sender, EventArgs e)
@@ -35,8 +35,8 @@ namespace WinFormsApp2
             {
                 wyswietl.Text += "gotowe ";
                 List<double[]> warstwy = new List<double[]>();
-                warstwy = wycztaj1(wejscia, (int)licznik.Value);
-                sieÊ Siec = new sieÊ(wagi_miejsce, bias_miejsce, warstwy);
+                warstwy = wycztaj1(wejscia, (int)licznik.Value, wyjscie);
+                sieƒá Siec = new sieƒá(wagi_miejsce, bias_miejsce, warstwy);
                 wyswietl.Text ="";
                 List<double> error1 = new List<double>();
                 error1=Siec.tranig(100,0.3,wejscia, wyjscie);
@@ -73,14 +73,14 @@ namespace WinFormsApp2
             {
                 wyswietl.Text += "gotowe ";
                 List<double[]> warstwy = new List<double[]>();
-                warstwy = wycztaj1(wejscia, (int)licznik.Value);
-                sieÊ Siec = new sieÊ(wagi_miejsce, bias_miejsce, warstwy);
+                warstwy = wycztaj1(wejscia, (int)licznik.Value, wyjscie);
+                sieƒá Siec = new sieƒá(wagi_miejsce, bias_miejsce, warstwy);
                 wyswietl.Text = "";
                 List<double> error1 = new List<double>();
                 error1 = Siec.tranig(100, 0.3, wejscia, wyjscie);
                 for (int i = 0; i < error1.Count; i++)
                 {
-                    wyswietl.Text += "   ," + error1[i];
+                    wyswietl.Text += "   ." + error1[i];
                 }
 
             }
@@ -98,8 +98,8 @@ namespace WinFormsApp2
             {
                 wyswietl.Text += "gotowe ";
                 List<double[]> warstwy = new List<double[]>();
-                warstwy = wycztaj1(wejscia, (int)licznik.Value);
-                sieÊ Siec = new sieÊ(wagi_miejsce, bias_miejsce, warstwy);
+                warstwy = wycztaj1(wejscia, (int)licznik.Value, wyjscie);
+                sieƒá Siec = new sieƒá(wagi_miejsce, bias_miejsce, warstwy);
                 wyswietl.Text = "";
                 List<double> error1 = new List<double>();
                 error1 = Siec.tranig(100, 0.3, wejscia, wyjscie);
@@ -114,7 +114,7 @@ namespace WinFormsApp2
         {
 
         }
-        private List<double[]> wycztaj1(int[,] wejscia, int ile_warst)
+        private List<double[]> wycztaj1(int[,] wejscia, int ile_warst, int[,] wyjscie)
         {
 
             List<double[]> warstwy = new List<double[]>();
@@ -122,7 +122,11 @@ namespace WinFormsApp2
             {
                 if (i == ile_warst - 1)
                 {
-                    inf.Text = "Podaj ile neuronuw w warstwie wyjsciowy";
+                    wagi_miejsce += warstwy[i - 1].Length * wyjscie.GetLength(1);
+                    bias_miejsce += wyjscie.GetLength(1);
+                    double[] neuronuw1 = new double[wyjscie.GetLength(1)];
+                    warstwy.Add(neuronuw1);
+                    break;
                 }
                 else
                 {
@@ -130,11 +134,11 @@ namespace WinFormsApp2
                 }
                 enterPressed = false;
 
-                // czekamy, aø uøytkownik wciúnie Enter
+                // czekamy, a≈º u≈ºytkownik wci≈õnie Enter
                 while (!enterPressed)
                 {
                     Application.DoEvents();
-                    System.Threading.Thread.Sleep(10);  // odrobina pauzy, by nie ìzapchaÊî CPU
+                    System.Threading.Thread.Sleep(10);  // odrobina pauzy, by nie ‚Äúzapchaƒá‚Äù CPU
                 }
                 double[] neuronuw = new double[(int)licznik.Value];
                 warstwy.Add(neuronuw);
@@ -158,12 +162,12 @@ namespace WinFormsApp2
     }
 
 }
-class sieÊ :Form1
+class sieƒá :Form1
 {
     List<double[]> warstwy = new List<double[]>();
     public double[] wagi;
     public double[] bias;
-    public sieÊ(int wagi_miejsce, int bias_miejsce, List<double[]> warstwy) 
+    public sieƒá(int wagi_miejsce, int bias_miejsce, List<double[]> warstwy) 
     {
         Random rand = new Random();
         wagi = new double[wagi_miejsce];
