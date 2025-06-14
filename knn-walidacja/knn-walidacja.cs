@@ -160,10 +160,8 @@ class dane
                     double[,] pamieć = new double[list.Count, 2];
                     for (int j = 0; j < list.Count; j++)
                     {
-                        if (j == i)
+                        if(i==j)
                         {
-                            pamieć[j, 0] = 0;
-                            pamieć[j, 1] = list[j][list[j].Length - 1];
                             continue;
                         }
                         pamieć[j, 0] = m[k](list[i], list[j]);
@@ -208,12 +206,8 @@ class dane
                 List<double> klasa = new List<double>();
                 for (int j = 0; j < a.GetLength(0); j++)
                 {
-                    if (klasy[i] == a[j, 1])
+                    if (klasy[i] == a[j, 1]&& a[j,1]!=0)
                     {
-                        if (a[j, 0] == 0)
-                        {
-                            continue;
-                        }
                         klasa.Add(a[j, 0]);
                     }
                 }
@@ -269,17 +263,7 @@ class dane
         static void Main(string[] args)
         {
             int liczba;
-            while (true)
-            {
-                Console.WriteLine("Podaj liczbe od 1 do 47");
-                liczba=int.Parse(Console.ReadLine());
-                if(liczba<1 || liczba > 47)
-                {
-                    continue;
-                }
-                break;
-            }
-            klasyfikacja dane = new klasyfikacja(liczba);
+            klasyfikacja dane = new klasyfikacja(48);
             Console.ReadKey();
         }
     }
