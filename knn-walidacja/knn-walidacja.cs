@@ -263,7 +263,15 @@ class dane
         static void Main(string[] args)
         {
             int liczba;
-            klasyfikacja dane = new klasyfikacja(48);
+            while (true) {
+                Console.WriteLine("Podaj liczbe od 1 do 48");
+                liczba=int.Parse(Console.ReadLine());
+                if (liczba <= 0 || liczba > 48) {
+                    continue;
+                }
+                break;
+            }
+            klasyfikacja dane = new klasyfikacja(liczba);
             Console.ReadKey();
         }
     }
