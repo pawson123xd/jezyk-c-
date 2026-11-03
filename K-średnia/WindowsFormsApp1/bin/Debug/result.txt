@@ -1,0 +1,728 @@
+Numer itera:1
+Numer grupy:1
+Środe wartość:
+ [-1,60455,0,80827] 
+ Liczba próbke:
+ 10
+maksymalna wartość
+ x:-1,3866,y:1,3016
+ minimalna wartość
+ x:-1,7787,y:0,1831
+Numer grupy:2
+Środe wartość:
+ [-1,18954666666667,0,32309] 
+ Liczba próbke:
+ 30
+maksymalna wartość
+ x:-0,2074,y:1,9929
+ minimalna wartość
+ x:-0,952,y:-1,3021
+Numer grupy:3
+Środe wartość:
+ [0,57965737704918,-0,264026229508197] 
+ Liczba próbke:
+ 61
+maksymalna wartość
+ x:0,0322,y:1,9473
+ minimalna wartość
+ x:-0,0824,y:0,9435
+Numer itera:4
+Numer grupy:1
+Środe wartość:
+ [-0,729826666666667,1,28529666666667] 
+ Liczba próbke:
+ 30
+maksymalna wartość
+ x:0,0322,y:1,9473
+ minimalna wartość
+ x:-0,0824,y:0,9435
+Numer grupy:2
+Środe wartość:
+ [-1,12639655172414,-0,874120689655173] 
+ Liczba próbke:
+ 29
+maksymalna wartość
+ x:-1,7208,y:0,2806
+ minimalna wartość
+ x:-0,0566,y:-1,4538
+Numer grupy:3
+Środe wartość:
+ [0,909226190476191,-0,274752380952381] 
+ Liczba próbke:
+ 42
+maksymalna wartość
+ x:0,1774,y:-1,4508
+ minimalna wartość
+ x:0,5039,y:0,9162
+Numer itera:8
+Numer grupy:1
+Środe wartość:
+ [-0,729826666666667,1,28529666666667] 
+ Liczba próbke:
+ 30
+maksymalna wartość
+ x:0,0322,y:1,9473
+ minimalna wartość
+ x:-0,0824,y:0,9435
+Numer grupy:2
+Środe wartość:
+ [-1,12639655172414,-0,874120689655173] 
+ Liczba próbke:
+ 29
+maksymalna wartość
+ x:-1,7208,y:0,2806
+ minimalna wartość
+ x:-0,0566,y:-1,4538
+Numer grupy:3
+Środe wartość:
+ [0,909226190476191,-0,274752380952381] 
+ Liczba próbke:
+ 42
+maksymalna wartość
+ x:0,1774,y:-1,4508
+ minimalna wartość
+ x:0,5039,y:0,9162
+Numer itera:12
+Numer grupy:1
+Środe wartość:
+ [-0,729826666666667,1,28529666666667] 
+ Liczba próbke:
+ 30
+maksymalna wartość
+ x:0,0322,y:1,9473
+ minimalna wartość
+ x:-0,0824,y:0,9435
+Numer grupy:2
+Środe wartość:
+ [-1,12639655172414,-0,874120689655173] 
+ Liczba próbke:
+ 29
+maksymalna wartość
+ x:-1,7208,y:0,2806
+ minimalna wartość
+ x:-0,0566,y:-1,4538
+Numer grupy:3
+Środe wartość:
+ [0,909226190476191,-0,274752380952381] 
+ Liczba próbke:
+ 42
+maksymalna wartość
+ x:0,1774,y:-1,4508
+ minimalna wartość
+ x:0,5039,y:0,9162
+Numer itera:16
+Numer grupy:1
+Środe wartość:
+ [-0,729826666666667,1,28529666666667] 
+ Liczba próbke:
+ 30
+maksymalna wartość
+ x:0,0322,y:1,9473
+ minimalna wartość
+ x:-0,0824,y:0,9435
+Numer grupy:2
+Środe wartość:
+ [-1,12639655172414,-0,874120689655173] 
+ Liczba próbke:
+ 29
+maksymalna wartość
+ x:-1,7208,y:0,2806
+ minimalna wartość
+ x:-0,0566,y:-1,4538
+Numer grupy:3
+Środe wartość:
+ [0,909226190476191,-0,274752380952381] 
+ Liczba próbke:
+ 42
+maksymalna wartość
+ x:0,1774,y:-1,4508
+ minimalna wartość
+ x:0,5039,y:0,9162
+Numer itera:20
+Numer grupy:1
+Środe wartość:
+ [-0,729826666666667,1,28529666666667] 
+ Liczba próbke:
+ 30
+maksymalna wartość
+ x:0,0322,y:1,9473
+ minimalna wartość
+ x:-0,0824,y:0,9435
+Numer grupy:2
+Środe wartość:
+ [-1,12639655172414,-0,874120689655173] 
+ Liczba próbke:
+ 29
+maksymalna wartość
+ x:-1,7208,y:0,2806
+ minimalna wartość
+ x:-0,0566,y:-1,4538
+Numer grupy:3
+Środe wartość:
+ [0,909226190476191,-0,274752380952381] 
+ Liczba próbke:
+ 42
+maksymalna wartość
+ x:0,1774,y:-1,4508
+ minimalna wartość
+ x:0,5039,y:0,9162
+Numer itera:24
+Numer grupy:1
+Środe wartość:
+ [-0,729826666666667,1,28529666666667] 
+ Liczba próbke:
+ 30
+maksymalna wartość
+ x:0,0322,y:1,9473
+ minimalna wartość
+ x:-0,0824,y:0,9435
+Numer grupy:2
+Środe wartość:
+ [-1,12639655172414,-0,874120689655173] 
+ Liczba próbke:
+ 29
+maksymalna wartość
+ x:-1,7208,y:0,2806
+ minimalna wartość
+ x:-0,0566,y:-1,4538
+Numer grupy:3
+Środe wartość:
+ [0,909226190476191,-0,274752380952381] 
+ Liczba próbke:
+ 42
+maksymalna wartość
+ x:0,1774,y:-1,4508
+ minimalna wartość
+ x:0,5039,y:0,9162
+Numer itera:28
+Numer grupy:1
+Środe wartość:
+ [-0,729826666666667,1,28529666666667] 
+ Liczba próbke:
+ 30
+maksymalna wartość
+ x:0,0322,y:1,9473
+ minimalna wartość
+ x:-0,0824,y:0,9435
+Numer grupy:2
+Środe wartość:
+ [-1,12639655172414,-0,874120689655173] 
+ Liczba próbke:
+ 29
+maksymalna wartość
+ x:-1,7208,y:0,2806
+ minimalna wartość
+ x:-0,0566,y:-1,4538
+Numer grupy:3
+Środe wartość:
+ [0,909226190476191,-0,274752380952381] 
+ Liczba próbke:
+ 42
+maksymalna wartość
+ x:0,1774,y:-1,4508
+ minimalna wartość
+ x:0,5039,y:0,9162
+Numer itera:32
+Numer grupy:1
+Środe wartość:
+ [-0,729826666666667,1,28529666666667] 
+ Liczba próbke:
+ 30
+maksymalna wartość
+ x:0,0322,y:1,9473
+ minimalna wartość
+ x:-0,0824,y:0,9435
+Numer grupy:2
+Środe wartość:
+ [-1,12639655172414,-0,874120689655173] 
+ Liczba próbke:
+ 29
+maksymalna wartość
+ x:-1,7208,y:0,2806
+ minimalna wartość
+ x:-0,0566,y:-1,4538
+Numer grupy:3
+Środe wartość:
+ [0,909226190476191,-0,274752380952381] 
+ Liczba próbke:
+ 42
+maksymalna wartość
+ x:0,1774,y:-1,4508
+ minimalna wartość
+ x:0,5039,y:0,9162
+Numer itera:36
+Numer grupy:1
+Środe wartość:
+ [-0,729826666666667,1,28529666666667] 
+ Liczba próbke:
+ 30
+maksymalna wartość
+ x:0,0322,y:1,9473
+ minimalna wartość
+ x:-0,0824,y:0,9435
+Numer grupy:2
+Środe wartość:
+ [-1,12639655172414,-0,874120689655173] 
+ Liczba próbke:
+ 29
+maksymalna wartość
+ x:-1,7208,y:0,2806
+ minimalna wartość
+ x:-0,0566,y:-1,4538
+Numer grupy:3
+Środe wartość:
+ [0,909226190476191,-0,274752380952381] 
+ Liczba próbke:
+ 42
+maksymalna wartość
+ x:0,1774,y:-1,4508
+ minimalna wartość
+ x:0,5039,y:0,9162
+Numer itera:40
+Numer grupy:1
+Środe wartość:
+ [-0,729826666666667,1,28529666666667] 
+ Liczba próbke:
+ 30
+maksymalna wartość
+ x:0,0322,y:1,9473
+ minimalna wartość
+ x:-0,0824,y:0,9435
+Numer grupy:2
+Środe wartość:
+ [-1,12639655172414,-0,874120689655173] 
+ Liczba próbke:
+ 29
+maksymalna wartość
+ x:-1,7208,y:0,2806
+ minimalna wartość
+ x:-0,0566,y:-1,4538
+Numer grupy:3
+Środe wartość:
+ [0,909226190476191,-0,274752380952381] 
+ Liczba próbke:
+ 42
+maksymalna wartość
+ x:0,1774,y:-1,4508
+ minimalna wartość
+ x:0,5039,y:0,9162
+Numer itera:44
+Numer grupy:1
+Środe wartość:
+ [-0,729826666666667,1,28529666666667] 
+ Liczba próbke:
+ 30
+maksymalna wartość
+ x:0,0322,y:1,9473
+ minimalna wartość
+ x:-0,0824,y:0,9435
+Numer grupy:2
+Środe wartość:
+ [-1,12639655172414,-0,874120689655173] 
+ Liczba próbke:
+ 29
+maksymalna wartość
+ x:-1,7208,y:0,2806
+ minimalna wartość
+ x:-0,0566,y:-1,4538
+Numer grupy:3
+Środe wartość:
+ [0,909226190476191,-0,274752380952381] 
+ Liczba próbke:
+ 42
+maksymalna wartość
+ x:0,1774,y:-1,4508
+ minimalna wartość
+ x:0,5039,y:0,9162
+Numer itera:48
+Numer grupy:1
+Środe wartość:
+ [-0,729826666666667,1,28529666666667] 
+ Liczba próbke:
+ 30
+maksymalna wartość
+ x:0,0322,y:1,9473
+ minimalna wartość
+ x:-0,0824,y:0,9435
+Numer grupy:2
+Środe wartość:
+ [-1,12639655172414,-0,874120689655173] 
+ Liczba próbke:
+ 29
+maksymalna wartość
+ x:-1,7208,y:0,2806
+ minimalna wartość
+ x:-0,0566,y:-1,4538
+Numer grupy:3
+Środe wartość:
+ [0,909226190476191,-0,274752380952381] 
+ Liczba próbke:
+ 42
+maksymalna wartość
+ x:0,1774,y:-1,4508
+ minimalna wartość
+ x:0,5039,y:0,9162
+Numer itera:52
+Numer grupy:1
+Środe wartość:
+ [-0,729826666666667,1,28529666666667] 
+ Liczba próbke:
+ 30
+maksymalna wartość
+ x:0,0322,y:1,9473
+ minimalna wartość
+ x:-0,0824,y:0,9435
+Numer grupy:2
+Środe wartość:
+ [-1,12639655172414,-0,874120689655173] 
+ Liczba próbke:
+ 29
+maksymalna wartość
+ x:-1,7208,y:0,2806
+ minimalna wartość
+ x:-0,0566,y:-1,4538
+Numer grupy:3
+Środe wartość:
+ [0,909226190476191,-0,274752380952381] 
+ Liczba próbke:
+ 42
+maksymalna wartość
+ x:0,1774,y:-1,4508
+ minimalna wartość
+ x:0,5039,y:0,9162
+Numer itera:56
+Numer grupy:1
+Środe wartość:
+ [-0,729826666666667,1,28529666666667] 
+ Liczba próbke:
+ 30
+maksymalna wartość
+ x:0,0322,y:1,9473
+ minimalna wartość
+ x:-0,0824,y:0,9435
+Numer grupy:2
+Środe wartość:
+ [-1,12639655172414,-0,874120689655173] 
+ Liczba próbke:
+ 29
+maksymalna wartość
+ x:-1,7208,y:0,2806
+ minimalna wartość
+ x:-0,0566,y:-1,4538
+Numer grupy:3
+Środe wartość:
+ [0,909226190476191,-0,274752380952381] 
+ Liczba próbke:
+ 42
+maksymalna wartość
+ x:0,1774,y:-1,4508
+ minimalna wartość
+ x:0,5039,y:0,9162
+Numer itera:60
+Numer grupy:1
+Środe wartość:
+ [-0,729826666666667,1,28529666666667] 
+ Liczba próbke:
+ 30
+maksymalna wartość
+ x:0,0322,y:1,9473
+ minimalna wartość
+ x:-0,0824,y:0,9435
+Numer grupy:2
+Środe wartość:
+ [-1,12639655172414,-0,874120689655173] 
+ Liczba próbke:
+ 29
+maksymalna wartość
+ x:-1,7208,y:0,2806
+ minimalna wartość
+ x:-0,0566,y:-1,4538
+Numer grupy:3
+Środe wartość:
+ [0,909226190476191,-0,274752380952381] 
+ Liczba próbke:
+ 42
+maksymalna wartość
+ x:0,1774,y:-1,4508
+ minimalna wartość
+ x:0,5039,y:0,9162
+Numer itera:64
+Numer grupy:1
+Środe wartość:
+ [-0,729826666666667,1,28529666666667] 
+ Liczba próbke:
+ 30
+maksymalna wartość
+ x:0,0322,y:1,9473
+ minimalna wartość
+ x:-0,0824,y:0,9435
+Numer grupy:2
+Środe wartość:
+ [-1,12639655172414,-0,874120689655173] 
+ Liczba próbke:
+ 29
+maksymalna wartość
+ x:-1,7208,y:0,2806
+ minimalna wartość
+ x:-0,0566,y:-1,4538
+Numer grupy:3
+Środe wartość:
+ [0,909226190476191,-0,274752380952381] 
+ Liczba próbke:
+ 42
+maksymalna wartość
+ x:0,1774,y:-1,4508
+ minimalna wartość
+ x:0,5039,y:0,9162
+Numer itera:68
+Numer grupy:1
+Środe wartość:
+ [-0,729826666666667,1,28529666666667] 
+ Liczba próbke:
+ 30
+maksymalna wartość
+ x:0,0322,y:1,9473
+ minimalna wartość
+ x:-0,0824,y:0,9435
+Numer grupy:2
+Środe wartość:
+ [-1,12639655172414,-0,874120689655173] 
+ Liczba próbke:
+ 29
+maksymalna wartość
+ x:-1,7208,y:0,2806
+ minimalna wartość
+ x:-0,0566,y:-1,4538
+Numer grupy:3
+Środe wartość:
+ [0,909226190476191,-0,274752380952381] 
+ Liczba próbke:
+ 42
+maksymalna wartość
+ x:0,1774,y:-1,4508
+ minimalna wartość
+ x:0,5039,y:0,9162
+Numer itera:72
+Numer grupy:1
+Środe wartość:
+ [-0,729826666666667,1,28529666666667] 
+ Liczba próbke:
+ 30
+maksymalna wartość
+ x:0,0322,y:1,9473
+ minimalna wartość
+ x:-0,0824,y:0,9435
+Numer grupy:2
+Środe wartość:
+ [-1,12639655172414,-0,874120689655173] 
+ Liczba próbke:
+ 29
+maksymalna wartość
+ x:-1,7208,y:0,2806
+ minimalna wartość
+ x:-0,0566,y:-1,4538
+Numer grupy:3
+Środe wartość:
+ [0,909226190476191,-0,274752380952381] 
+ Liczba próbke:
+ 42
+maksymalna wartość
+ x:0,1774,y:-1,4508
+ minimalna wartość
+ x:0,5039,y:0,9162
+Numer itera:76
+Numer grupy:1
+Środe wartość:
+ [-0,729826666666667,1,28529666666667] 
+ Liczba próbke:
+ 30
+maksymalna wartość
+ x:0,0322,y:1,9473
+ minimalna wartość
+ x:-0,0824,y:0,9435
+Numer grupy:2
+Środe wartość:
+ [-1,12639655172414,-0,874120689655173] 
+ Liczba próbke:
+ 29
+maksymalna wartość
+ x:-1,7208,y:0,2806
+ minimalna wartość
+ x:-0,0566,y:-1,4538
+Numer grupy:3
+Środe wartość:
+ [0,909226190476191,-0,274752380952381] 
+ Liczba próbke:
+ 42
+maksymalna wartość
+ x:0,1774,y:-1,4508
+ minimalna wartość
+ x:0,5039,y:0,9162
+Numer itera:80
+Numer grupy:1
+Środe wartość:
+ [-0,729826666666667,1,28529666666667] 
+ Liczba próbke:
+ 30
+maksymalna wartość
+ x:0,0322,y:1,9473
+ minimalna wartość
+ x:-0,0824,y:0,9435
+Numer grupy:2
+Środe wartość:
+ [-1,12639655172414,-0,874120689655173] 
+ Liczba próbke:
+ 29
+maksymalna wartość
+ x:-1,7208,y:0,2806
+ minimalna wartość
+ x:-0,0566,y:-1,4538
+Numer grupy:3
+Środe wartość:
+ [0,909226190476191,-0,274752380952381] 
+ Liczba próbke:
+ 42
+maksymalna wartość
+ x:0,1774,y:-1,4508
+ minimalna wartość
+ x:0,5039,y:0,9162
+Numer itera:84
+Numer grupy:1
+Środe wartość:
+ [-0,729826666666667,1,28529666666667] 
+ Liczba próbke:
+ 30
+maksymalna wartość
+ x:0,0322,y:1,9473
+ minimalna wartość
+ x:-0,0824,y:0,9435
+Numer grupy:2
+Środe wartość:
+ [-1,12639655172414,-0,874120689655173] 
+ Liczba próbke:
+ 29
+maksymalna wartość
+ x:-1,7208,y:0,2806
+ minimalna wartość
+ x:-0,0566,y:-1,4538
+Numer grupy:3
+Środe wartość:
+ [0,909226190476191,-0,274752380952381] 
+ Liczba próbke:
+ 42
+maksymalna wartość
+ x:0,1774,y:-1,4508
+ minimalna wartość
+ x:0,5039,y:0,9162
+Numer itera:88
+Numer grupy:1
+Środe wartość:
+ [-0,729826666666667,1,28529666666667] 
+ Liczba próbke:
+ 30
+maksymalna wartość
+ x:0,0322,y:1,9473
+ minimalna wartość
+ x:-0,0824,y:0,9435
+Numer grupy:2
+Środe wartość:
+ [-1,12639655172414,-0,874120689655173] 
+ Liczba próbke:
+ 29
+maksymalna wartość
+ x:-1,7208,y:0,2806
+ minimalna wartość
+ x:-0,0566,y:-1,4538
+Numer grupy:3
+Środe wartość:
+ [0,909226190476191,-0,274752380952381] 
+ Liczba próbke:
+ 42
+maksymalna wartość
+ x:0,1774,y:-1,4508
+ minimalna wartość
+ x:0,5039,y:0,9162
+Numer itera:92
+Numer grupy:1
+Środe wartość:
+ [-0,729826666666667,1,28529666666667] 
+ Liczba próbke:
+ 30
+maksymalna wartość
+ x:0,0322,y:1,9473
+ minimalna wartość
+ x:-0,0824,y:0,9435
+Numer grupy:2
+Środe wartość:
+ [-1,12639655172414,-0,874120689655173] 
+ Liczba próbke:
+ 29
+maksymalna wartość
+ x:-1,7208,y:0,2806
+ minimalna wartość
+ x:-0,0566,y:-1,4538
+Numer grupy:3
+Środe wartość:
+ [0,909226190476191,-0,274752380952381] 
+ Liczba próbke:
+ 42
+maksymalna wartość
+ x:0,1774,y:-1,4508
+ minimalna wartość
+ x:0,5039,y:0,9162
+Numer itera:96
+Numer grupy:1
+Środe wartość:
+ [-0,729826666666667,1,28529666666667] 
+ Liczba próbke:
+ 30
+maksymalna wartość
+ x:0,0322,y:1,9473
+ minimalna wartość
+ x:-0,0824,y:0,9435
+Numer grupy:2
+Środe wartość:
+ [-1,12639655172414,-0,874120689655173] 
+ Liczba próbke:
+ 29
+maksymalna wartość
+ x:-1,7208,y:0,2806
+ minimalna wartość
+ x:-0,0566,y:-1,4538
+Numer grupy:3
+Środe wartość:
+ [0,909226190476191,-0,274752380952381] 
+ Liczba próbke:
+ 42
+maksymalna wartość
+ x:0,1774,y:-1,4508
+ minimalna wartość
+ x:0,5039,y:0,9162
+Numer itera:100
+Numer grupy:1
+Środe wartość:
+ [-0,729826666666667,1,28529666666667] 
+ Liczba próbke:
+ 30
+maksymalna wartość
+ x:0,0322,y:1,9473
+ minimalna wartość
+ x:-0,0824,y:0,9435
+Numer grupy:2
+Środe wartość:
+ [-1,12639655172414,-0,874120689655173] 
+ Liczba próbke:
+ 29
+maksymalna wartość
+ x:-1,7208,y:0,2806
+ minimalna wartość
+ x:-0,0566,y:-1,4538
+Numer grupy:3
+Środe wartość:
+ [0,909226190476191,-0,274752380952381] 
+ Liczba próbke:
+ 42
+maksymalna wartość
+ x:0,1774,y:-1,4508
+ minimalna wartość
+ x:0,5039,y:0,9162
